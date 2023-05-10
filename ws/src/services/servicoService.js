@@ -1,6 +1,4 @@
 const multer = require('multer');
-const { v4: uuidv4 } = require('uuid');
-const path = require('path');
 const aws = require('../utils/aws/aws');
 const Arquivo = require('../database/models/arquivo');
 const Servico = require('../database/models/servico');
@@ -73,65 +71,69 @@ const handleFileUpload = async (req) => {
 	});
 };
 
-module.exports = { handleFileUpload };
+const updateServico = async (req) => {
+	return new Promise((resolve, reject) => {
+		upload(req, null, async (error) => {
+			if (error) {
+				reject(error);
+				return;
+			} else {
+				const { salaoId, servico } = req.body;
+				let errors = [];
+				let arquivos = [];
 
-// const Busboy = require('busboy');
-// const { v4: uuidv4 } = require('uuid');
-// const path = require('path');
-// const fs = require('fs');
-// const aws = require('../utils/aws/aws');
-// const Arquivo = require('../database/models/arquivo');
-// const Servico = require('../database/models/servico');
+				if (req.files && req.files.length > 0) {
+					for (let file of req.files) {
+						const splitName = file.originalname.split('.');
+						const fileName = `${new Date().getTime()}.${splitName[splitName.length - 1]
+							}`;
+						const path = `servicos/${salaoId}/${fileName}`;
 
-// // Função para lidar com o upload de arquivos usando o Busboy
-// const handleFileUpload = async (req) => {
-//   return new Promise((_resolve, reject) => {
-//     const busboy = Busboy({ headers: req.headers });
-//     busboy.on('close', async () => {
-//       const { salaoId, servico } = req.body;
-//       let errors = [];
-//       let arquivos = [];
+						const response = await aws.uploadToS3(file, path);
 
-//       if (req.files && Object.keys(req.files).length > 0) {
-//         for (let key of Object.keys(req.files)) {
-//           const file = req.files[key];
-//           const splitName = file.originalname.split('.');
-//           const fileName = `${new Date().getTime()}.${splitName[splitName.length - 1]}`;
-//           const path = `servicos/${salaoId}/${fileName}`;
+						response.error
+							? errors.push({ error: true, message: response.message })
+							: arquivos.push(path);
+					}
+				}
 
-//           const response = await aws.uploadToS3(file, path);
+				if (errors.length > 0) {
+					throw errorThrow(errors[0].message);
+				}
 
-//           response.error ? errors.push({ error: true, message: response.message })
-//             : arquivos.push(path);
-//           };
-//       }
+				// Criar Serviço
+				const novoServico = JSON.parse(servico);
+				await Servico.findByIdAndUpdate(req.params.id, novoServico);
 
-//       if (errors.length > 0)
-//         throw errorThrow(500, errors[0]);
+				// Criar arquivo
+				arquivos = arquivos.map((arquivo) => ({
+					referenciaId: req.params.id,
+					model: 'Servico',
+					caminho: arquivo,
+				}));
 
-//     //Criar Serviço
-//       console.log(servico);
-//       let jsonServico = JSON.parse(servico);
-//       const novoServico = await Servico(jsonServico).save();
+				await Arquivo.insertMany(arquivos);
 
-//     //Criar arquivo
-//       arquivos = arquivos.map(arquivo => ({
-//         referenciaId: novoServico._id,
-//         model: 'Servico',
-//         caminho: arquivo,
-//       }));
+				resolve({ servico: novoServico, arquivos });
+			}
+		});
+	});
+};
 
-//       await Arquivo.insertMany(arquivos);
+const deleteArquivo = async (req) => {
+	const {path} = req.body;
 
-//       return { servico: novoServico, arquivos };
-//     });
+	await aws.deleteFileS3(path);
 
-//     busboy.on('error', (err) => {
-//       reject(err);
-//     });
+	await Arquivo.findOneAndDelete({
+		caminho: path,
+	});
 
-//     req.pipe(busboy);
-//   });
-// }
+	return { message: 'Arquivo deletado com sucesso!' };
+};
 
-// module.exports = { handleFileUpload };
+module.exports = {
+	handleFileUpload,
+	updateServico,
+	deleteArquivo,
+};
