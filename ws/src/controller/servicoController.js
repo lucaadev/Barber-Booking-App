@@ -22,7 +22,7 @@ const updatedServico = async (req, res, next) => {
   }
 };
 
-const removeServico = async (req, res, next) => {
+const removeArquivo = async (req, res, next) => {
   try {
     const message = await deleteArquivo(req);
     return res.status(200).json(message);
@@ -31,4 +31,4 @@ const removeServico = async (req, res, next) => {
   }
 };
 
-module.exports = { newServico, updatedServico, removeServico };
+module.exports = { newServico, updatedServico, removeArquivo };

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', servicoController.newServico);
 router.put('/:id', servicoController.updatedServico);
-router.delete('/delete-arquivo', servicoController.removeServico);
+router.delete('/delete-arquivo', servicoController.removeArquivo);
 
 
 module.exports = router;
