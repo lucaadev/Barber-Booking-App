@@ -18,8 +18,15 @@ const getServicosBySalaoId = async (id) => {
   const servicos = await Servico.find({
     salaoId: id,
     status: 'A',
-  }).select('_id, titulo');
-  return servicos.map(s => ({ label: s.titulo, value: s._id}));
+  }).select('_id, nome');
+  return servicos.map(s => ({ label: s.nome, value: s._id}));
 };
 
-module.exports = { createNewSalao, getServicosBySalaoId };
+const getInfoById = async (id) => {
+  const infos = await Salao.findById(id)
+    .select('nome foto capa telefone endereco.cidade geo.coordinates');
+
+  return infos;
+};
+
+module.exports = { createNewSalao, getServicosBySalaoId, getInfoById };
