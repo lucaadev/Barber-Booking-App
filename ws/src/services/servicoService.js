@@ -132,8 +132,34 @@ const deleteArquivo = async (req) => {
 	return { message: 'Arquivo deletado com sucesso!' };
 };
 
+const changeServicoStatus = async (id) => {
+	await Servico.findByIdAndUpdate(id, {status: 'E'});
+
+	return { message: 'Status alterado com sucesso!' };
+};
+
+const getServicosById = async (id) => {
+	let servicosSalao = [];   
+	const servicos = await Servico.find({
+		salaoId: id,
+		status: { $ne: 'E' },
+	});
+	
+	for (let servico of servicos) {
+		const arquivos = await Arquivo.find({
+			referenciaId: servico._id,
+			model: 'Servico',
+		});
+		servicosSalao.push({ ...servico._doc, arquivos });
+	};
+
+	return {servicos: servicosSalao};
+};
+
 module.exports = {
 	handleFileUpload,
 	updateServico,
 	deleteArquivo,
+	changeServicoStatus,
+	getServicosById,
 };
