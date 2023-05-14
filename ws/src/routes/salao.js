@@ -1,5 +1,5 @@
 const express = require('express');
-const salaoController = require('../controller/salaoController');
+const salaoController = require('../controller/salao');
 const salaoValidation = require('../middlewares/salaoValidation');
 const router = express.Router();
 

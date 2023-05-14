@@ -1,4 +1,4 @@
-const { createNewSalao, getServicosBySalaoId, getInfoById } = require("../services/salaoService");
+const { createNewSalao, getServicosBySalaoId, getInfoById } = require("../services/salao");
 
 const newSalao = async (req, res, next) => {
   try {

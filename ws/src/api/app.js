@@ -1,8 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const salaoRoute = require('../routes/salao.route');
-const servicoRoute = require('../routes/servico.route');
+const salaoRoute = require('../routes/salao');
+const servicoRoute = require('../routes/servico');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 
 const app = express();

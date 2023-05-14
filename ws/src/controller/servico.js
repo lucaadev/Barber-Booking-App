@@ -4,7 +4,7 @@ const {
   deleteArquivo,
   changeServicoStatus,
   getServicosById,
-} = require("../services/servicoService");
+} = require("../services/servico");
 
 const getServicosBySalaoId = async (req, res, next) => {
   try {
