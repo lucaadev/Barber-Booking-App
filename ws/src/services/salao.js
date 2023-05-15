@@ -1,4 +1,7 @@
 const errorThrow = require('../utils/errorThrow');
+const colaborador = require('../database/models/colaborador');
+const colaboradorServico = require('../database/models/relationships/colaboradorServico');
+const salaoColaborador = require('../database/models/relationships/salaoColaborador');
 const Salao = require('../database/models/salao');
 const Servico = require('../database/models/servico');
 
@@ -29,4 +32,16 @@ const getInfoById = async (id) => {
   return infos;
 };
 
-module.exports = { createNewSalao, getServicosBySalaoId, getInfoById };
+const updateColaborador = async (id, body) => {
+  const { status, statusId, servicos } = body;
+
+  await salaoColaborador.findByIdAndUpdate(statusId, { status }).exec();
+
+  await colaboradorServico.deleteMany({ colaboradorId: id }).exec();
+
+  await colaboradorServico.insertMany(servicos.map(s => ({ colaboradorId: id, servicoId: s })));
+
+  return { message: 'Colaborador atualizado com sucesso!' };
+};
+
+module.exports = { createNewSalao, getServicosBySalaoId, getInfoById, updateColaborador };

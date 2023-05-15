@@ -1,4 +1,4 @@
-const { createNewSalao, getServicosBySalaoId, getInfoById } = require("../services/salao");
+const { createNewSalao, getServicosBySalaoId, getInfoById, updateColaborador } = require("../services/salao");
 
 const newSalao = async (req, res, next) => {
   try {
@@ -29,4 +29,14 @@ const getInfoSalaoById = async (req, res, next) => {
   }
 };
 
-module.exports = { newSalao, servicosSalao, getInfoSalaoById };
+const upColaborador = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await updateColaborador(id, req.body);
+    return res.status(200).json(response.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { newSalao, servicosSalao, getInfoSalaoById, upColaborador };
