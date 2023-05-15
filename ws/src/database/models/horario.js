@@ -14,11 +14,13 @@ const horario = new Schema({
     required: true,
     }
   ],
-  colaboradores: {
+  colaboradores: [
+    {
     type: mongoose.Types.ObjectId,
     ref: 'Colaborador',
     required: true,
-  },
+    }
+  ],
   dias: {
     type: [Number],
     required: [true, 'Dias é obrigatório.'],
