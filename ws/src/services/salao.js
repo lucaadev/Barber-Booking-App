@@ -1,5 +1,4 @@
 const errorThrow = require('../utils/errorThrow');
-const colaborador = require('../database/models/colaborador');
 const colaboradorServico = require('../database/models/relationships/colaboradorServico');
 const salaoColaborador = require('../database/models/relationships/salaoColaborador');
 const Salao = require('../database/models/salao');
