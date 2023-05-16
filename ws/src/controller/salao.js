@@ -4,6 +4,7 @@ const {
   getInfoById,
   updateColaborador,
   handleStatusColaborador,
+  getColaboradoresBySalaoId,
 } = require("../services/salao");
 
 const newSalao = async (req, res, next) => {
@@ -55,10 +56,21 @@ const changeStatusColaborador = async (req, res, next) => {
   }
 };
 
+const findColaboradoresBySalaoId = async (req, res, next) => {
+  try {
+    const { salaoId } = req.params;
+    const colaboradores = await getColaboradoresBySalaoId(salaoId);
+    return res.status(200).json(colaboradores);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   newSalao,
   servicosSalao,
   getInfoSalaoById,
   upColaborador,
   changeStatusColaborador,
+  findColaboradoresBySalaoId,
 };

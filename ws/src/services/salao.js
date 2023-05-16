@@ -53,10 +53,33 @@ const handleStatusColaborador = async (id) => {
   return { message: 'Colaborador deletado com sucesso!' };
 };
 
+const getColaboradoresBySalaoId = async (id) => {
+  let listaDeColaboradores = [];
+
+  const colaboradores = await salaoColaborador.find({
+    salaoId: id,
+    status: { $ne: 'E' },
+  }).populate('colaboradorId').select('colaboradorId status dataCadastro').exec();
+
+  for (let status of colaboradores) {
+    const servicos = await colaboradorServico.find({
+      colaboradorId: status.colaboradorId._id,
+    });
+
+    listaDeColaboradores.push({
+      ...status._doc,
+      servicos,
+    });
+  };
+
+  return { colaboradores: listaDeColaboradores };
+};
+
 module.exports = {
   createNewSalao,
   getServicosBySalaoId,
   getInfoById,
   updateColaborador,
   handleStatusColaborador,
+  getColaboradoresBySalaoId,
 };

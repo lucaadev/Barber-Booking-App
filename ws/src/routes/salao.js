@@ -3,8 +3,9 @@ const salaoController = require('../controller/salao');
 const salaoValidation = require('../middlewares/salaoValidation');
 const router = express.Router();
 
-router.get('/servicos/:salaoId', salaoController.servicosSalao);
 router.get('/:salaoId', salaoController.getInfoSalaoById);
+router.get('/servicos/:salaoId', salaoController.servicosSalao);
+router.get('/colaboradores/:salaoId', salaoController.findColaboradoresBySalaoId);
 
 router.post('/', salaoValidation, salaoController.newSalao);
 
