@@ -1,4 +1,7 @@
-const { createColaborador } = require('../services/colaborador');
+const {
+  createColaborador,
+  getColaboradoresByBodyFilter,
+} = require('../services/colaborador');
 
 const createNewColaborador = async (req, res, next) => {
   try {
@@ -9,4 +12,17 @@ const createNewColaborador = async (req, res, next) => {
   };
 };
 
-module.exports = { createNewColaborador };
+const findByBodyFilter = async (req, res, next) => {
+  try {
+    const { filters } = req.body;
+    const colaboradores = await getColaboradoresByBodyFilter(filters);
+    return res.status(200).json({ colaboradores: colaboradores });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createNewColaborador,
+  findByBodyFilter,
+};

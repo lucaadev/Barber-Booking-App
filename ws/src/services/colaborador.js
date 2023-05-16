@@ -49,4 +49,12 @@ const createColaborador = async (body) => {
   };
 };
 
-module.exports = { createColaborador };
+const getColaboradoresByBodyFilter = async (filters) => {
+  const colaboradores = await Colaborador.find(filters);
+  return colaboradores;
+};
+
+module.exports = {
+  createColaborador,
+  getColaboradoresByBodyFilter,
+};
