@@ -44,4 +44,20 @@ const updateColaborador = async (id, body) => {
   return { message: 'Colaborador atualizado com sucesso!' };
 };
 
-module.exports = { createNewSalao, getServicosBySalaoId, getInfoById, updateColaborador };
+const handleStatusColaborador = async (id) => {
+  const colaboradorExists = await salaoColaborador.findById(id).exec();
+  if (!colaboradorExists) throw errorThrow(404, 'Colaborador não encontrado.');
+
+  await salaoColaborador
+    .findByIdAndUpdate(id, { status: 'E' }).exec();
+
+  return { message: 'Colaborador deletado com sucesso!' };
+};
+
+module.exports = {
+  createNewSalao,
+  getServicosBySalaoId,
+  getInfoById,
+  updateColaborador,
+  handleStatusColaborador,
+};
