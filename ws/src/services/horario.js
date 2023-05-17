@@ -6,4 +6,18 @@ const createHorario = async (body) => {
   return horario;
 };
 
-module.exports = { createHorario };
+const getHorarioOfSalaoById = async (id) => {
+  const horarios = await Horario.find({ salaoId: id });
+  return {horarios: horarios};
+};
+
+const updateHorario = async (id, body) => {
+  await Horario.findByIdAndUpdate(id, body);
+  return { message: 'Horario atualizado com sucesso!' };
+};
+
+module.exports = {
+  createHorario,
+  getHorarioOfSalaoById,
+  updateHorario,
+};

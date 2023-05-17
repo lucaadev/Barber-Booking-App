@@ -1,4 +1,8 @@
-const { createHorario } = require('../services/horario');
+const {
+  createHorario,
+  getHorarioOfSalaoById,
+  updateHorario,
+} = require('../services/horario');
 
 const newHorario = async (req, res, next) => {
   try {
@@ -9,4 +13,26 @@ const newHorario = async (req, res, next) => {
   }
 };
 
-module.exports = { newHorario };
+const getHorarioOfSalao = async (req, res, next) => {
+  try {
+    const horarios = await getHorarioOfSalaoById(req.params.id);
+    return res.status(200).json(horarios);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updatedHorario = async (req, res, next) => {
+  try {
+    const horario = await updateHorario(req.params.id, req.body);
+    return res.status(200).json(horario);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  newHorario,
+  getHorarioOfSalao,
+  updatedHorario,
+};
