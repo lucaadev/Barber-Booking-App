@@ -1,6 +1,7 @@
 const {
   createColaborador,
   getColaboradoresByBodyFilter,
+  getColaboradoresByServicoId,
 } = require('../services/colaborador');
 
 const createNewColaborador = async (req, res, next) => {
@@ -22,7 +23,18 @@ const findByBodyFilter = async (req, res, next) => {
   }
 };
 
+const findByServicoId = async (req, res, next) => {
+  try {
+    const { body } = req;
+    const colaboradores = await getColaboradoresByServicoId(body);
+    return res.status(200).json({ colaboradores: colaboradores });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createNewColaborador,
   findByBodyFilter,
+  findByServicoId,
 };

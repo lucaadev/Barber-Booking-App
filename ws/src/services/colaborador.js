@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 const errorThrow = require('../utils/errorThrow');
 const Colaborador = require('../database/models/colaborador');
 const SalaoColaborador = require('../database/models/relationships/salaoColaborador');
@@ -54,7 +55,20 @@ const getColaboradoresByBodyFilter = async (filters) => {
   return colaboradores;
 };
 
+const getColaboradoresByServicoId = async (body) => {
+  const colaboradores = await ColaboradorServico.find({
+    servicoId: { $in: body.servicos },
+    status: 'A',
+  }).populate('colaboradorId', 'nome').select('colaboradorId -_id');
+
+  const listaDeColaboradores = _.uniqBy(colaboradores, 'colaboradorId')
+    .map(c => c.colaboradorId);
+
+  return listaDeColaboradores;
+};
+
 module.exports = {
   createColaborador,
   getColaboradoresByBodyFilter,
+  getColaboradoresByServicoId,
 };
