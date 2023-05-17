@@ -16,8 +16,14 @@ const updateHorario = async (id, body) => {
   return { message: 'Horario atualizado com sucesso!' };
 };
 
+const deleteHorario = async (id) => {
+  await Horario.findByIdAndDelete(id);
+  return { message: 'Horario deletado com sucesso!' };
+};
+
 module.exports = {
   createHorario,
   getHorarioOfSalaoById,
   updateHorario,
+  deleteHorario,
 };

@@ -8,4 +8,6 @@ router.post('/', horarioController.newHorario);
 
 router.put('/:id', horarioController.updatedHorario);
 
+router.delete('/:id', horarioController.deletedHorario);
+
 module.exports = router;

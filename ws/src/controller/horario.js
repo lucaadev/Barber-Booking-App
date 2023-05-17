@@ -2,6 +2,7 @@ const {
   createHorario,
   getHorarioOfSalaoById,
   updateHorario,
+  deleteHorario,
 } = require('../services/horario');
 
 const newHorario = async (req, res, next) => {
@@ -31,8 +32,18 @@ const updatedHorario = async (req, res, next) => {
   }
 };
 
+const deletedHorario = async (req, res, next) => {
+  try {
+    const horario = await deleteHorario(req.params.id);
+    return res.status(200).json(horario);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   newHorario,
   getHorarioOfSalao,
   updatedHorario,
+  deletedHorario,
 };
