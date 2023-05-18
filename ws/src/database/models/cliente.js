@@ -9,12 +9,6 @@ const cliente = new Schema({
   telefone: {
     type: String,
     required: [true, 'Telefone é obrigatório.'],
-    validate: {
-      validator: function (value) {
-        return /\(\d{2}\)\d{5}-\d{4}/.test(value);
-      },
-      message: 'Telefone inválido. O formato deve ser (XX)XXXXX-XXXX.',
-    },
   },
   dataCadastro: {
     type: Date,
