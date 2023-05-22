@@ -20,7 +20,7 @@ const servico = new Schema({
     required: [true, 'Foto é obrigatório.'],
   },
   duracao: {
-    type: Number,
+    type: Date,
     required: [true, 'Duração é obrigatório.'],
   },
   recorrencia: {
