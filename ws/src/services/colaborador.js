@@ -9,7 +9,7 @@ const createColaborador = async (body) => {
   const db = mongoose.connection;
   const session = await db.startSession();
   session.startTransaction();
-  
+
   try {
     const { colaborador, salaoId } = body;
     const alreadyExistsColaborator = await Colaborador.findOne({ email: colaborador.email }).exec();
