@@ -13,7 +13,7 @@
 }
 
 header {
-  background-color: var(--primary-color);
+  background-color: var(--blue);
 }
 
 header > div {
