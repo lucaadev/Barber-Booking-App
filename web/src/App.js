@@ -1,12 +1,27 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import './styles.css';
 
-function App() {
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Agendamentos from './pages/agendamentos';
+import Clientes from './pages/clientes';
+
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<h1>Ola</h1>} />
-    </Routes>
+    <>
+      <Header />
+      <div className="container-fluid h-100">
+        <div className="row h-100">
+          <Sidebar />
+          <Routes>
+            <Route path="/" exact element={<Agendamentos />} />
+            <Route path="/clientes" element={<Clientes />} />
+          </Routes>
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default App;

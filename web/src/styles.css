@@ -1,0 +1,48 @@
+:root {
+  --primary-color: #4D4269;
+  --yellow: #FDB02F;
+  --white: #F9F9F9;
+  --grey: #A7AAC6;
+  --blue: #353D87;
+}
+
+.root {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+}
+
+header {
+  background-color: var(--primary-color);
+}
+
+header > div {
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px 20px;
+}
+
+header > div:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+
+header img {
+  width: 50px;
+  border-radius: 100%;
+}
+
+header span:not(.mdi) {
+  margin-bottom: -10px;
+}
+
+header span.mdi {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+header small {
+  color: var(--yellow);
+  display: block;
+  margin-top: -20px;
+}
