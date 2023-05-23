@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #4D4269;
+  --primary-color: #6038c7;
   --yellow: #FDB02F;
   --white: #F9F9F9;
   --grey: #A7AAC6;
@@ -12,8 +12,10 @@
   width: 100%;
 }
 
+/* HEADER */
+
 header {
-  background-color: var(--blue);
+  background-color: var(--yellow);
 }
 
 header > div {
@@ -42,7 +44,65 @@ header span.mdi {
 }
 
 header small {
-  color: var(--yellow);
+  color: var(--blue);
   display: block;
   margin-top: -20px;
+}
+
+/* SIDEBAR */
+
+sidebar {
+  background-color: var(--blue);
+  height: 100%;
+  position: fixed;
+  width: 250px;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+sidebar ul li {
+  list-style: none;
+  width: 100%;
+}
+
+sidebar ul li a {
+  color: var(--white);
+  width: 100%;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  margin: 2.5px;
+  transition: 0.5s;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+sidebar ul li a:hover {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+sidebar ul li a.active {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: 0.5s;
+}
+
+sidebar ul li a.active .mdi {
+  color: var(--yellow);
+}
+
+sidebar ul li a:visited,
+sidebar ul li a:focus {
+  color: var(--white);
+}
+
+sidebar ul li a span.mdi {
+  font-size: 25px;
+  margin: 0 10px;
+}
+
+sidebar ul li a text {
+  font-size: 15px;
 }
