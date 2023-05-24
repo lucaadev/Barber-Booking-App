@@ -4,23 +4,23 @@ const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <sidebar className="col-2 h-100">
+    <aside className="col-2 h-100">
       <h1 className="px-2 py-4 text-center text-white">Barbearia Lisboa</h1>
       <ul className="p-0 m-0">
         <li>
           <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
             <span className="mdi mdi-calendar-check"></span>
-            <text>Agendamentos</text>
+            <span>Agendamentos</span>
           </Link>
         </li>
         <li>
           <Link to="/clientes" className={location.pathname === '/clientes' ? 'active' : ''}>
             <span className="mdi mdi-account-multiple"></span>
-            <text>Clientes</text>
+            <span>Clientes</span>
           </Link>
         </li>
       </ul>
-    </sidebar>
+    </aside>
   );
 };
 
