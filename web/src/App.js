@@ -13,11 +13,15 @@ const App = () => {
       <Header />
       <div className="container-fluid h-100">
         <div className="row h-100">
+          <div className="row col-2">
           <Sidebar />
-          <Routes>
-            <Route path="/" exact element={<Agendamentos />} />
-            <Route path="/clientes" element={<Clientes />} />
-          </Routes>
+          </div>
+          <div className="col-10">
+            <Routes>
+              <Route path="/" exact element={<Agendamentos />} />
+              <Route path="/clientes" element={<Clientes />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </>
