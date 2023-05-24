@@ -64,7 +64,7 @@ const filterAgendamentos = async (body) => {
     { path: 'clienteId', select: '-_id' },
     { path: 'colaboradorId', select: 'nome' },
     { path: 'servicoId', select: 'nome valor duracao' },
-  ]);
+  ]).select('-valor');
 
   return { agendamentos: agendamentos };
 };
