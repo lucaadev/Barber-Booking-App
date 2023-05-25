@@ -15,16 +15,18 @@
 /* HEADER */
 
 header {
+  position: fixed;
   background-color: var(--yellow);
+  z-index: 2;
 }
 
-header > div {
+header>div {
   cursor: pointer;
   transition: 0.5s;
   padding: 10px 20px;
 }
 
-header > div:hover {
+header>div:hover {
   background-color: rgba(0, 0, 0, 0.2);
   transition: 0.5s;
 }
@@ -52,6 +54,9 @@ header small {
 /* SIDEBAR */
 
 aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: var(--blue);
   height: 100%;
   position: fixed;
@@ -105,4 +110,8 @@ aside ul li a span.mdi {
 
 aside ul li a span {
   font-size: 15px;
+}
+
+.texto {
+  word-wrap: break-word;
 }
