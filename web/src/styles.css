@@ -54,20 +54,22 @@ header small {
 /* SIDEBAR */
 
 aside {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background-color: var(--blue);
   height: 100%;
   position: fixed;
-  width: 250px;
   transition: 0.5s;
-  z-index: 1;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 aside ul li {
   list-style: none;
   width: 100%;
+  padding: 15px;
+  margin: 5px 5px;
 }
 
 aside ul li a {
@@ -113,5 +115,57 @@ aside ul li a span {
 }
 
 .texto {
+  margin-bottom: 20px;
   word-wrap: break-word;
+}
+
+/* Consultas de mídia */
+
+@media screen and (max-width: 768px) {
+
+  /* Ajustes para telas menores que 768px */
+  aside {
+    width: 100px;
+  }
+
+  .divList {
+    flex: 1;
+    margin-top: 20px;
+  }
+
+  aside ul li {
+    padding: 10px;
+  }
+
+  aside ul li a span.mdi {
+    font-size: 20px;
+  }
+
+  aside ul li a span {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  /* Ajustes para telas menores que 480px */
+  aside {
+    width: 80px;
+  }
+
+  .divList {
+    margin-top: 10px;
+  }
+
+  aside ul li {
+    padding: 5px;
+  }
+
+  aside ul li a span.mdi {
+    font-size: 15px;
+  }
+
+  aside ul li a span {
+    font-size: 10px;
+  }
 }
