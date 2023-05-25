@@ -3,6 +3,9 @@
 # files
 /src/assets
 
+# env
+.env
+
 # dependencies
 /node_modules
 /.pnp
