@@ -6,8 +6,7 @@ const {
   diasDisponiveis,
 } = require('../controller/agendamento');
 
-router.get('/filter', filteredAgendamentos);
-
+router.post('/filter', filteredAgendamentos);
 router.post('/', createAgendamento);
 router.post('/disponibilidade-horarios', diasDisponiveis);
 
