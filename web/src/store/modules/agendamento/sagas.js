@@ -1,6 +1,7 @@
-import { all, takeLatest, call } from 'redux-saga/effects';
+import { all, takeLatest, call, put } from 'redux-saga/effects';
 import api from '../../../services/api';
 
+import { updateAgendamento } from './actions';
 import types from './types';
 import consts from '../../../consts';
 
@@ -8,7 +9,7 @@ export function* filterAgendamento(action) {
   try {
     const { start, end } = action;
 
-    const res = yield call(api.post, '/agendamento/filter', {
+    const {data: res} = yield call(api.post, '/agendamento/filter', {
         salaoId: consts.salaoId,
         periodo: {
           inicio: start,
@@ -16,7 +17,13 @@ export function* filterAgendamento(action) {
         }
     });
 
-  console.log(res.data);
+    console.log(res);
+
+  if(res.error) {
+    alert(res.error);
+  } else {
+    yield put(updateAgendamento(res.agendamentos));
+  }
 } catch (err) {
   console.log(err.message);
 }
