@@ -90,7 +90,6 @@ const getClienteOfSalao = async (id) => {
   const clientesFormatados = clientes.map((cliente) => {
     const { clienteId, dataCadastro } = cliente;
     const { _id, nome, telefone } = clienteId;
-    console.log(clienteId);
     return {
       id: _id,
       nome, 
