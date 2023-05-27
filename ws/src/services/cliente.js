@@ -77,7 +77,11 @@ const updateCliente = async (id, body) => {
 };
 
 const getClientesByBodyFilter = async (filters) => {
-  const clientes = await Cliente.find(filters);
+  const { nome } = filters;
+  const clientes = await Cliente.find({
+    nome: { $regex: nome, $options: 'i' },
+    status: 'A',
+  });
   return clientes;
 };
 
