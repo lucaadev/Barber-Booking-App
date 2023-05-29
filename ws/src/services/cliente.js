@@ -11,51 +11,42 @@ const newCliente = async (body) => {
   try {
     const {cliente} = body;
     const alreadyExistsCliente = await Cliente.findOne({ telefone: cliente.telefone }).exec();
-    if (alreadyExistsCliente && alreadyExistsCliente.status === 'E') {
-      await Cliente.findOneAndUpdate({ _id: alreadyExistsCliente._id }, { status: 'A' }, { session });
-      return 'Cliente reativado com sucesso.';
+
+    if(!alreadyExistsCliente) {
+      const newCliente = await new Cliente({
+        nome: cliente.nome,
+        telefone: cliente.telefone,
+      }).save({ session });
+
+      const clienteId = newCliente._id.toString();
+
+      await new salaoCliente({
+        salaoId: body.salaoId,
+        clienteId,
+      }).save({ session });
+
+      await session.commitTransaction();
+      session.endSession();
+      return newCliente;
     }
-    
-    const alreadyExistsAssociated = await salaoCliente.findOne({
-      salaoId: body.salaoId,
-      clienteId: alreadyExistsCliente._id,
-      status: { $ne: 'E' },
-    }).exec();
 
-    if (alreadyExistsAssociated) throw errorThrow(409, 'Esse cliente já está associado a esse salão.');
-
-    const newCliente = await new Cliente({
-      nome: cliente.nome,
-      telefone: cliente.telefone,
-    }).save({ session });
-
-    const clienteId = alreadyExistsCliente
-      ? alreadyExistsCliente._id
-      : newCliente._id;
-
-    const  alreadyExistsRelation = await Cliente.findOne({
-      clienteId,
-      status: { $ne: 'E' },
+    const  alreadyExistsRelation = await salaoCliente.findOne({
+      clienteId: alreadyExistsCliente._id.toString(),
+      status: 'E',
     }).exec();
 
     if (alreadyExistsRelation) {
       await salaoCliente.findOneAndUpdate(
         { salaoId: body.salaoId,
-          clienteId,
+          clienteId: alreadyExistsCliente._id.toString(),
         },
         { status: 'A' },
         {session},
       );
+      await session.commitTransaction();
+      session.endSession();
+      return alreadyExistsCliente;
     }
-
-    await new salaoCliente({
-      salaoId: body.salaoId,
-      clienteId,
-    }).save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
-    return newCliente;
   } catch (error) {
     await session.abortTransaction();
     throw error;

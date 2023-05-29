@@ -15,7 +15,7 @@ const salaoCliente = new Schema({
   status: {
     type: String,
     required: true,
-    enum: ['A', 'I'],
+    enum: ['A', 'E'],
     default: 'A',
   },
   dataCadastro: {
