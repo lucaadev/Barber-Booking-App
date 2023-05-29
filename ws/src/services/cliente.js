@@ -11,7 +11,18 @@ const newCliente = async (body) => {
   try {
     const {cliente} = body;
     const alreadyExistsCliente = await Cliente.findOne({ telefone: cliente.telefone }).exec();
-    if (alreadyExistsCliente) throw errorThrow(409, 'Esse telefone já está cadastrado.');
+    if (alreadyExistsCliente && alreadyExistsCliente.status === 'E') {
+      await Cliente.findOneAndUpdate({ _id: alreadyExistsCliente._id }, { status: 'A' }, { session });
+      return 'Cliente reativado com sucesso.';
+    }
+    
+    const alreadyExistsAssociated = await salaoCliente.findOne({
+      salaoId: body.salaoId,
+      clienteId: alreadyExistsCliente._id,
+      status: { $ne: 'E' },
+    }).exec();
+
+    if (alreadyExistsAssociated) throw errorThrow(409, 'Esse cliente já está associado a esse salão.');
 
     const newCliente = await new Cliente({
       nome: cliente.nome,
@@ -106,7 +117,8 @@ const getClienteOfSalao = async (id) => {
 };
 
 const changeStatusCliente = async (id) => {
-  await salaoCliente.findByIdAndUpdate(id, { status: 'E' });
+
+  await salaoCliente.updateOne({ clienteId: id }, { status: 'E' });
 
   return { message: 'Cliente deletado com sucesso.' };
 };
