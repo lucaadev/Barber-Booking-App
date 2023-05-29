@@ -12,7 +12,7 @@ const cliente = new Schema({
   },
   status: {
     type: String,
-    enum: ['A', 'I'],
+    enum: ['A', 'E'],
     default: 'A',
   },
   dataCadastro: {
