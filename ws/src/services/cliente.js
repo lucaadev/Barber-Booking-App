@@ -11,40 +11,42 @@ const newCliente = async (body) => {
   try {
     const {cliente} = body;
     const alreadyExistsCliente = await Cliente.findOne({ telefone: cliente.telefone }).exec();
-    if (alreadyExistsCliente) throw errorThrow(409, 'Esse telefone já está cadastrado.');
 
-    const newCliente = await new Cliente({
-      nome: cliente.nome,
-      telefone: cliente.telefone,
-    }).save({ session });
+    if(!alreadyExistsCliente) {
+      const newCliente = await new Cliente({
+        nome: cliente.nome,
+        telefone: cliente.telefone,
+      }).save({ session });
 
-    const clienteId = alreadyExistsCliente
-      ? alreadyExistsCliente._id
-      : newCliente._id;
+      const clienteId = newCliente._id.toString();
 
-    const  alreadyExistsRelation = await Cliente.findOne({
-      clienteId,
-      status: { $ne: 'E' },
+      await new salaoCliente({
+        salaoId: body.salaoId,
+        clienteId,
+      }).save({ session });
+
+      await session.commitTransaction();
+      session.endSession();
+      return newCliente;
+    }
+
+    const  alreadyExistsRelation = await salaoCliente.findOne({
+      clienteId: alreadyExistsCliente._id.toString(),
+      status: 'E',
     }).exec();
 
     if (alreadyExistsRelation) {
       await salaoCliente.findOneAndUpdate(
         { salaoId: body.salaoId,
-          clienteId,
+          clienteId: alreadyExistsCliente._id.toString(),
         },
         { status: 'A' },
         {session},
       );
+      await session.commitTransaction();
+      session.endSession();
+      return alreadyExistsCliente;
     }
-
-    await new salaoCliente({
-      salaoId: body.salaoId,
-      clienteId,
-    }).save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
-    return newCliente;
   } catch (error) {
     await session.abortTransaction();
     throw error;
@@ -77,7 +79,11 @@ const updateCliente = async (id, body) => {
 };
 
 const getClientesByBodyFilter = async (filters) => {
-  const clientes = await Cliente.find(filters);
+  const { nome } = filters;
+  const clientes = await Cliente.find({
+    nome: { $regex: nome, $options: 'i' },
+    status: 'A',
+  });
   return clientes;
 };
 
@@ -90,7 +96,6 @@ const getClienteOfSalao = async (id) => {
   const clientesFormatados = clientes.map((cliente) => {
     const { clienteId, dataCadastro } = cliente;
     const { _id, nome, telefone } = clienteId;
-    console.log(clienteId);
     return {
       id: _id,
       nome, 
@@ -103,7 +108,8 @@ const getClienteOfSalao = async (id) => {
 };
 
 const changeStatusCliente = async (id) => {
-  await salaoCliente.findByIdAndUpdate(id, { status: 'E' });
+
+  await salaoCliente.updateOne({ clienteId: id }, { status: 'E' });
 
   return { message: 'Cliente deletado com sucesso.' };
 };

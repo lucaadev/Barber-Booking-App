@@ -10,6 +10,11 @@ const cliente = new Schema({
     type: String,
     required: [true, 'Telefone é obrigatório.'],
   },
+  status: {
+    type: String,
+    enum: ['A', 'E'],
+    default: 'A',
+  },
   dataCadastro: {
     type: Date,
     default: Date.now,
