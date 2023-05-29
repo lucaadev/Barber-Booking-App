@@ -119,6 +119,16 @@ aside ul li a span {
   word-wrap: break-word;
 }
 
+.custom-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
 /* Consultas de mídia */
 
 @media screen and (max-width: 768px) {
