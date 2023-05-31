@@ -57,7 +57,7 @@ const Clientes = () => {
 					</h3>
 					<div className='row mt-3'>
 						<div className='form-group col-12 mb-3'>
-							<b>Nome:</b>
+							<b>Nome</b>
 							<div className='input-group'>
 								<input
 									disabled={behavior === 'update'}
