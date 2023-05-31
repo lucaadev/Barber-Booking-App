@@ -59,15 +59,19 @@ const getColaboradoresBySalaoId = async (id) => {
   const colaboradores = await salaoColaborador.find({
     salaoId: id,
     status: { $ne: 'E' },
-  }).populate('colaboradorId').select('colaboradorId status dataCadastro').exec();
+  }).populate({ path: 'colaboradorId', select: '-senha -status' }).select('colaboradorId status dataCadastro').exec();
 
   for (let status of colaboradores) {
     const servicos = await colaboradorServico.find({
       colaboradorId: status.colaboradorId._id,
     });
 
+    const { colaboradorId, _id } = status._doc;
+
     listaDeColaboradores.push({
-      ...status._doc,
+      ...colaboradorId._doc,
+      statusId: _id,
+      status: status._doc.status,
       servicos: servicos.map(s => (s.servicoId._id)),
     });
   };
