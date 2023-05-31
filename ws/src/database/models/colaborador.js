@@ -17,7 +17,7 @@ const colaborador = new Schema({
   },
   senha: {
     type: String,
-    required: [true, 'Senha é obrigatória.'],
+    default: '123456',
   },
   telefone: String,
   sexo: {
