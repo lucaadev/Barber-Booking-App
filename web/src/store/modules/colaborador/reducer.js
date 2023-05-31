@@ -22,7 +22,7 @@ const initialState = {
     telefone: '',
     sexo: '',
     status: '',
-    especialidades: [],
+    servicos: [],
   }
 };
 
