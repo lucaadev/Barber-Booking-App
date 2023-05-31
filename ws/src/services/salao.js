@@ -48,7 +48,7 @@ const handleStatusColaborador = async (id) => {
   if (!colaboradorExists) throw errorThrow(404, 'Colaborador não encontrado.');
 
   await salaoColaborador
-    .findByIdAndUpdate(id, { status: 'E' }).exec();
+    .updateOne({colaboradorId: id}, { status: 'E' }).exec();
 
   return { message: 'Colaborador deletado com sucesso!' };
 };
