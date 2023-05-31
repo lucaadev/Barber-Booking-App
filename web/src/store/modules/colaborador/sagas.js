@@ -30,9 +30,11 @@ export function* filterColaboradores() {
   const { form, colaborador } = yield select(state => state.colaboradorReducer);
   try {
     yield put(updateColaborador({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.post, 'salao/filter/colaborador', {
-      email: colaborador.email,
-      status: 'A'
+    const { data: res } = yield call(api.post, 'colaborador/filter', {
+      filters: {
+        email: colaborador.email,
+        status: 'A',
+      }
     });
     yield put(updateColaborador({ form: { ...form, filtering: false } }));
 
@@ -57,14 +59,28 @@ export function* filterColaboradores() {
   }
 }
 
-export function* addcolaborador() {
-  const { form, colaborador, components } = yield select(state => state.colaboradorReducer);
+export function* addColaborador() {
+  const { form, colaborador, components, behavior } = yield select(state => state.colaboradorReducer);
   try {
     yield put(updateColaborador({ form: { ...form, saving: true } }));
-    const { data: res } = yield call(api.post, '/colaborador', {
-      salaoId: consts.salaoId,
-      colaborador,
-    });
+
+    let res = {};
+
+    if (behavior === 'create') {
+      const response = yield call(api.post, '/colaborador', {
+        salaoId: consts.salaoId,
+        colaborador,
+      });
+      res = response.data;
+    } else {
+      const response = yield call(api.put, `/salao/colaborador/${colaborador._id}`, {
+        statusId: colaborador.statusId,
+        status: colaborador.status,
+        servicos: colaborador.servicos,
+      });
+      res = response.data;
+    }
+
     yield put(updateColaborador({ form: { ...form, saving: false } }));
 
     if (res.error) {
@@ -82,12 +98,12 @@ export function* addcolaborador() {
   }
 }
 
-export function* dissassociationcolaborador() {
+export function* dissassociatioColaborador() {
   const { form, colaborador, components } = yield select(state => state.colaboradorReducer);
   try {
 
     yield put(updateColaborador({ form: { ...form, saving: true } }));
-    const { data: res } = yield call(api.delete, `/salao/colaborador/status/${colaborador.id}`);
+    const { data: res } = yield call(api.delete, `/salao/colaborador/status/${colaborador._id}`);
 
     yield put(updateColaborador({
       components: { ...components, confirmDelete: false },
@@ -130,7 +146,7 @@ export function* allServicos() {
 export default all([
   takeLatest(types.FETCH_COLABORADORES, fetchColaboradores),
   takeLatest(types.FILTER_COLABORADORES, filterColaboradores),
-  takeLatest(types.ADD_COLABORADOR, addcolaborador),
-  takeLatest(types.DISSASSOCIATE_COLABORADOR, dissassociationcolaborador),
+  takeLatest(types.ADD_COLABORADOR, addColaborador),
+  takeLatest(types.DISSASSOCIATE_COLABORADOR, dissassociatioColaborador),
   takeLatest(types.ALL_SERVICOS, allServicos),
 ]);
