@@ -68,7 +68,7 @@ const getColaboradoresBySalaoId = async (id) => {
 
     listaDeColaboradores.push({
       ...status._doc,
-      servicos,
+      servicos: servicos.map(s => (s.servicoId._id)),
     });
   };
 
