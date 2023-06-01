@@ -46,10 +46,21 @@ export function* filterColaboradores() {
     if (res.colaboradores.length > 0) {
       yield put(updateColaborador({
         colaborador: res.colaboradores[0],
-        form: { ...form, disabled: true, filtering: false },
+        form: { ...form, disabled: true, filtering: false, },
+        behavior: 'update',
       }));
     } else {
       yield put(updateColaborador({
+        colaborador: {
+          nome: '',
+          email: colaborador.email,
+          dataNascimento: '',
+          senha: '',
+          telefone: '',
+          sexo: '',
+          status: '',
+          servicos: [],
+        },
         form: { ...form, disabled: false }
       }));
     }
@@ -60,7 +71,7 @@ export function* filterColaboradores() {
 }
 
 export function* addColaborador() {
-  const { form, colaborador, components, behavior } = yield select(state => state.colaboradorReducer);
+  let { form, colaborador, colaboradores, components, behavior } = yield select(state => state.colaboradorReducer);
   try {
     yield put(updateColaborador({ form: { ...form, saving: true } }));
 
@@ -73,6 +84,11 @@ export function* addColaborador() {
       });
       res = response.data;
     } else {
+      colaboradores.forEach((item) => {
+        if (item._id === colaborador._id) {
+          colaborador = { ...colaborador, statusId: item.statusId };
+        }
+      });
       const response = yield call(api.put, `/salao/colaborador/${colaborador._id}`, {
         statusId: colaborador.statusId,
         status: colaborador.status,
