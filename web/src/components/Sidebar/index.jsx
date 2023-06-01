@@ -7,7 +7,7 @@ const Sidebar = () => {
 
 	return (
 		<aside className='col-2 h-100'>
-			<img src={logoPrincipal} alt='logo' className='img-fluid px-3 py-4'/>
+			<img src={logoPrincipal} alt='logo' className='img-fluid' />
 			<ul className='p-0 m-0'>
 				<li>
 					<Link to='/' className={location.pathname === '/' ? 'active' : ''}>
@@ -22,6 +22,15 @@ const Sidebar = () => {
 					>
 						<span className='mdi mdi-account-multiple'></span>
 						<span>Clientes</span>
+					</Link>
+				</li>
+				<li>
+					<Link
+						to='/colaboradores'
+						className={location.pathname === '/colaboradores' ? 'active' : ''}
+					>
+						<span className='mdi mdi-card-account-details-outline'></span>
+						<span>Colaboradores</span>
 					</Link>
 				</li>
 			</ul>

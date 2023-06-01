@@ -17,8 +17,6 @@ export function* filterAgendamento(action) {
         }
     });
 
-    console.log(res);
-
   if(res.error) {
     alert(res.error);
   } else {

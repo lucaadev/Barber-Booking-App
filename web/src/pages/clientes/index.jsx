@@ -22,8 +22,6 @@ const Clientes = () => {
 		(state) => state.clienteReducer
 	);
 
-	console.log(components);
-
 	const setComponent = (component, state) => {
 		dispatch(
 			updateCliente({ components: { ...components, [component]: state } })
@@ -59,9 +57,10 @@ const Clientes = () => {
 					</h3>
 					<div className='row mt-3'>
 						<div className='form-group col-12 mb-3'>
-							<b>Nome:</b>
+							<b>Nome</b>
 							<div className='input-group'>
 								<input
+									disabled={behavior === 'update'}
 									type='text'
 									className='form-control'
 									placeholder='Nome do cliente'
@@ -70,18 +69,20 @@ const Clientes = () => {
 										setCliente('nome', e.target.value);
 									}}
 								/>
-								<div className='input-group-append'>
-									<Button
-										appearance='primary'
-										loading={form.filtering}
-										disabled={form.filtering}
-										onClick={() => {
-											dispatch(filterClientes());
-										}}
-									>
-										Buscar
-									</Button>
-								</div>
+								{behavior === 'create' && (
+									<div className='input-group-append'>
+										<Button
+											appearance='primary'
+											loading={form.filtering}
+											disabled={form.filtering}
+											onClick={() => {
+												dispatch(filterClientes());
+											}}
+										>
+											Buscar
+										</Button>
+									</div>
+								)}
 							</div>
 						</div>
 						<div className='form-group col-6'>
@@ -103,7 +104,7 @@ const Clientes = () => {
 								className='form-control phone-input'
 								mask={option}
 								maxLength={11}
-								placeholder='(12)93495-3947'
+								placeholder='Telefone / Whatsapp'
 								disabled={form.disabled}
 								value={cliente.telefone}
 								onChange={(e) =>

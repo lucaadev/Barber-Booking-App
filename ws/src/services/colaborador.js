@@ -51,7 +51,11 @@ const createColaborador = async (body) => {
 };
 
 const getColaboradoresByBodyFilter = async (filters) => {
-  const colaboradores = await Colaborador.find(filters);
+  const { email } = filters;
+  const colaboradores = await Colaborador.find({
+    email: { $regex: email, $options: 'i' },
+    status: 'A',
+  });
   return colaboradores;
 };
 

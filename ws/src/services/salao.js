@@ -34,7 +34,7 @@ const getInfoById = async (id) => {
 const updateColaborador = async (id, body) => {
   const { status, statusId, servicos } = body;
 
-  await salaoColaborador.findByIdAndUpdate(statusId, { status }).exec();
+  await salaoColaborador.findOneAndUpdate({_id: statusId}, { status }).exec();
 
   await colaboradorServico.deleteMany({ colaboradorId: id }).exec();
 
@@ -44,11 +44,11 @@ const updateColaborador = async (id, body) => {
 };
 
 const handleStatusColaborador = async (id) => {
-  const colaboradorExists = await salaoColaborador.findById(id).exec();
+  const colaboradorExists = await salaoColaborador.findOne({ colaboradorId: id }).exec();
   if (!colaboradorExists) throw errorThrow(404, 'Colaborador não encontrado.');
 
   await salaoColaborador
-    .findByIdAndUpdate(id, { status: 'E' }).exec();
+    .updateOne({colaboradorId: id}, { status: 'I' }).exec();
 
   return { message: 'Colaborador deletado com sucesso!' };
 };
@@ -59,16 +59,20 @@ const getColaboradoresBySalaoId = async (id) => {
   const colaboradores = await salaoColaborador.find({
     salaoId: id,
     status: { $ne: 'E' },
-  }).populate('colaboradorId').select('colaboradorId status dataCadastro').exec();
+  }).populate({ path: 'colaboradorId', select: '-senha -status' }).select('colaboradorId status dataCadastro').exec();
 
   for (let status of colaboradores) {
     const servicos = await colaboradorServico.find({
       colaboradorId: status.colaboradorId._id,
     });
 
+    const { colaboradorId, _id } = status._doc;
+
     listaDeColaboradores.push({
-      ...status._doc,
-      servicos,
+      ...colaboradorId._doc,
+      statusId: _id,
+      status: status._doc.status,
+      servicos: servicos.map(s => (s.servicoId._id)),
     });
   };
 
