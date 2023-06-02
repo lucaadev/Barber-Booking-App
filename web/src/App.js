@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import Agendamentos from './pages/agendamentos';
 import Clientes from './pages/clientes';
 import Colaboradores from './pages/colaboradores';
+import Servicos from './pages/servicos';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/" exact element={<Agendamentos />} />
               <Route path="/clientes" element={<Clientes />} />
               <Route path="/colaboradores" element={<Colaboradores />} />
+              <Route path="/servicos" element={<Servicos />} />
             </Routes>
           </div>
         </div>
