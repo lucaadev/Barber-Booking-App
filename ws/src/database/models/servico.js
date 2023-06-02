@@ -17,7 +17,6 @@ const servico = new Schema({
   },
   foto: {
     type: String,
-    required: [true, 'Foto é obrigatório.'],
   },
   duracao: {
     type: Date,
