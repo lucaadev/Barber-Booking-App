@@ -120,6 +120,7 @@ const Servicos = () => {
 						<div className='form-group col-12'>
 							<label className='d-block'>Imagens do serviço</label>
 							<Uploader
+							  action='/upload'
 								multiple
 								autoUpload={false}
 								listType='picture'
