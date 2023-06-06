@@ -28,7 +28,6 @@ const servico = new Schema({
   },
   descricao: {
     type: String,
-    required: [true, 'Descrição é obrigatório.'],
   },
   status: {
     type: String,

@@ -8,6 +8,7 @@ import Agendamentos from './pages/agendamentos';
 import Clientes from './pages/clientes';
 import Colaboradores from './pages/colaboradores';
 import Servicos from './pages/servicos';
+import Horarios from './pages/horarios';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="/clientes" element={<Clientes />} />
               <Route path="/colaboradores" element={<Colaboradores />} />
               <Route path="/servicos" element={<Servicos />} />
+              <Route path="/horarios" element={<Horarios />} />
             </Routes>
           </div>
         </div>

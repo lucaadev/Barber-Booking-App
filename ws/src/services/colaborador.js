@@ -65,8 +65,10 @@ const getColaboradoresByServicoId = async (body) => {
     status: 'A',
   }).populate('colaboradorId', 'nome').select('colaboradorId -_id');
 
-  const listaDeColaboradores = _.uniqBy(colaboradores, 'colaboradorId')
-    .map(c => c.colaboradorId);
+  const listaDeColaboradores = _.uniqBy(colaboradores, 'colaboradorId').map(colaborador => ({
+    label: colaborador.colaboradorId.nome,
+    value: colaborador.colaboradorId._id,
+  }));
 
   return listaDeColaboradores;
 };
