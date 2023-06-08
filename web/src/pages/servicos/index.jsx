@@ -52,13 +52,14 @@ const Servicos = () => {
 	}, [dispatch, components.drawer]);
 
 	return (
-		<div className='p-5 mt-5 overflow-auto h-100'>
+		<div className='p-5 mt-1 overflow-auto h-100'>
 			<Drawer
 				open={components.drawer}
 				size='sm'
 				onClose={() => {
 					setComponent('drawer', false);
 				}}
+				className={`responsive-drawer ${components.drawer ? 'open' : ''}`}
 			>
 				<Drawer.Body>
 					<h3>
@@ -69,7 +70,7 @@ const Servicos = () => {
 							<label>Nome</label>
 							<input
 								type='text'
-								className='form-control'
+								className='form-control rounded-0'
 								placeholder='Nome do servico'
 								value={servico.nome}
 								onChange={(e) => setServico('nome', e.target.value)}
@@ -79,7 +80,7 @@ const Servicos = () => {
 							<label>Valor</label>
 							<input
 								type='number'
-								className='form-control'
+								className='form-control rounded-0'
 								placeholder='Valor do servico'
 								value={servico.valor}
 								onChange={(e) => setServico('valor', e.target.value)}
@@ -90,6 +91,7 @@ const Servicos = () => {
 							<DatePicker
 								block
 								format='HH:mm'
+								className='rounded-0'
 								value={moment(servico.duracao).toDate()}
 								hideMinutes={(min) => ![0, 20, 40].includes(min)}
 								onChange={(value) => setServico('duracao', value)}
@@ -98,7 +100,7 @@ const Servicos = () => {
 						<div className='form-group col-6'>
 							<label>Status</label>
 							<select
-								className='form-control'
+								className='form-control rounded-0'
 								value={servico.status}
 								onChange={(e) => setServico('status', e.target.value)}
 							>
@@ -111,16 +113,16 @@ const Servicos = () => {
 							<label>Descrição</label>
 							<textarea
 								rows={5}
-								className='form-control'
+								className='form-control rounded-0'
 								placeholder='Descrição do servico'
 								value={servico.descricao}
 								onChange={(e) => setServico('descricao', e.target.value)}
 							/>
 						</div>
 						<div className='form-group col-12'>
-							<label className='d-block'>Imagens do serviço</label>
+							<label className='d-block mt-2'>Imagens do serviço</label>
 							<Uploader
-							  action='/upload'
+								action='/upload'
 								multiple
 								autoUpload={false}
 								listType='picture'
@@ -131,16 +133,16 @@ const Servicos = () => {
 								}))}
 								onChange={(files) => {
 									const arquivos = files
-                    .filter((file) => file.blobFile)
-                    .map((file) => file.blobFile);
+										.filter((file) => file.blobFile)
+										.map((file) => file.blobFile);
 
-                  setServico('arquivos', arquivos);                 
-                }}
-                onRemove={(file) => {
-                  if (behavior === 'update' && file.url) {
-                    dispatch(removeArquivo(file.name));
-                  }
-                }}
+									setServico('arquivos', arquivos);
+								}}
+								onRemove={(file) => {
+									if (behavior === 'update' && file.url) {
+										dispatch(removeArquivo(file.name));
+									}
+								}}
 							>
 								<button className='btn btn-primary btn-lg custom-btn'>
 									<span className='mdi mdi-image'> Importar imagem</span>
@@ -148,29 +150,29 @@ const Servicos = () => {
 							</Uploader>
 						</div>
 					</div>
-          <Button
-            loading={form.saving}
-            appearance='ghost'
-            color={behavior === 'create' ? 'green' : 'blue'}
-            size='lg'
-            block
-            onClick={() => save()}
-            className='mt-3'
-          >
-            {behavior === 'create' ? 'Salvar' : 'Atualizar'}
-          </Button>
-          {behavior === 'update' && (
-            <Button
-              loading={form.saving}
-              color='red'
-              size='lg'
-              block
-              onClick={() => setComponent('confirmDelete', true)}
-              className='mt-3'
-            >
-              Remover
-            </Button>
-          )}
+					<Button
+						loading={form.saving}
+						appearance='ghost'
+						color={behavior === 'create' ? 'green' : 'blue'}
+						size='lg'
+						block
+						onClick={() => save()}
+						className='mt-3 rounded-0'
+					>
+						{behavior === 'create' ? 'Salvar' : 'Atualizar'}
+					</Button>
+					{behavior === 'update' && (
+						<Button
+							loading={form.saving}
+							color='red'
+							size='lg'
+							block
+							onClick={() => setComponent('confirmDelete', true)}
+							className='mt-3'
+						>
+							Remover
+						</Button>
+					)}
 				</Drawer.Body>
 			</Drawer>
 			<Modal
@@ -213,20 +215,20 @@ const Servicos = () => {
 			</Modal>
 			<div className='row'>
 				<div className='col-12'>
+					<div className='d-flex justify-content-end'>
+						<Button
+							className='bg-primary text-white rounded-0 mb-2 mt-0'
+							onClick={() => {
+								dispatch(resetServico());
+								dispatch(updateServico({ behavior: 'create' }));
+								setComponent('drawer', true);
+							}}
+						>
+							<span className='mdi mdi-plus'>Novo Servico</span>
+						</Button>
+					</div>
 					<div className='w-100 d-flex justify-content-between'>
 						<h2 className='mb-4 mt-0'>Servicos</h2>
-						<div>
-							<button
-								className='btn btn-primary btn-lg custom-btn'
-								onClick={() => {
-                  dispatch(resetServico());
-									dispatch(updateServico({ behavior: 'create' }));
-									setComponent('drawer', true);
-								}}
-							>
-								<span className='mdi mdi-plus'>Novo servico</span>
-							</button>
-						</div>
 					</div>
 					<Table
 						loading={form.filtering}
@@ -272,6 +274,7 @@ const Servicos = () => {
 						]}
 						actions={(servico) => (
 							<Button
+								className='rounded-0'
 								style={{ color: 'white', backgroundColor: '#353D87' }}
 								size='xs'
 							>
