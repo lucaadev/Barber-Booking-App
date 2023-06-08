@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import { filterAgendamento } from '../../store/modules/agendamento/actions';
@@ -65,9 +65,14 @@ const Agendamentos = () => {
 						events={formatedEvents}
 						selectable
 						popup
-						defaultView='week'
+						defaultView={Views.DAY}
+						views={['day', 'week', 'month', 'agenda', 'work_week']}
+						step={20}
+						timeslots={3}
+						min={moment().startOf('day').add(8, 'hours').toDate()}
+						max={moment().startOf('day').add(20, 'hours').toDate()}
 						style={{ height: 600, zIndex: 1, position: 'relative' }}
-					/>
+/>
 				</div>
 			</div>
 		</div>
