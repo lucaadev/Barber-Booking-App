@@ -49,7 +49,7 @@ const Colaboradores = () => {
 
 
 	return (
-		<div className='p-5 mt-5 overflow-auto h-100'>
+		<div className='p-5 mt-1 overflow-auto h-100'>
 			<Drawer
 				open={components.drawer}
 				size='sm'
@@ -57,6 +57,7 @@ const Colaboradores = () => {
 					setComponent('drawer', false);
 					dispatch(allServicos());
 				}}
+				className={`responsive-drawer ${components.drawer ? 'open' : ''}`}
 			>
 				<Drawer.Body>
 					<h3>
@@ -72,7 +73,7 @@ const Colaboradores = () => {
 									disabled={behavior === 'update'}
 									type='text'
 									placeholder='Email do colaborador'
-									className='form-control'
+									className='form-control rounded-0'
 									value={colaborador.email}
 									onChange={(e) => setColaborador('email', e.target.value)}
 								/>
@@ -80,6 +81,7 @@ const Colaboradores = () => {
 									<div className='input-group-append'>
 										<Button
 											appearance='primary'
+											className='rounded-0'
 											loading={form.saving}
 											disabled={form.saving}
 											onClick={() => dispatch(filterColaboradores())}
@@ -95,7 +97,7 @@ const Colaboradores = () => {
 							<div className='input-group mb-3'>
 								<input
 									type='text'
-									className='form-control'
+									className='form-control rounded-0'
 									placeholder='Nome do colaborador'
 									disabled={behavior === 'update'}
 									value={colaborador.nome}
@@ -106,7 +108,7 @@ const Colaboradores = () => {
 						<div className='form-group col-6'>
 							<b>Status</b>
 							<select
-								className='form-control'
+								className='form-control rounded-0'
 								value={colaborador.status}
 								onChange={(e) => setColaborador('status', e.target.value)}
 							>
@@ -119,7 +121,7 @@ const Colaboradores = () => {
 							<b>Telefone / Whatsapp</b>
 							<input
 								type='text'
-								className='form-control phone-input'
+								className='form-control phone-input rounded-0'
 								mask={option}
 								maxLength={11}
 								placeholder='Telefone / Whatsapp'
@@ -140,7 +142,7 @@ const Colaboradores = () => {
 							<input
 								disabled={behavior === 'update'}
 								type='date'
-								className='form-control'
+								className='form-control rounded-0'
 								placeholder='Data de Nascimento do colaborador'
 								value={colaborador.dataNascimento}
 								onChange={(e) =>
@@ -151,7 +153,7 @@ const Colaboradores = () => {
 						<div className='form-group col-4'>
 							<b>Sexo</b>
 							<select
-								className='form-control'
+								className='form-control rounded-0'
 								disabled={behavior === 'update'}
 								value={colaborador.sexo}
 								onChange={(e) => setColaborador('sexo', e.target.value)}
@@ -167,6 +169,7 @@ const Colaboradores = () => {
 								block
 								size='lg'
 								data={servicos}
+								className='rounded-0'
 								disabled={form.disabled && behavior === 'create'}
 								value={colaborador.servicos}
 								onChange={(value) => setColaborador('servicos', value)}
@@ -175,7 +178,7 @@ const Colaboradores = () => {
 					</div>
 					<Button
 						block
-						className='btn-lg mt-3'
+						className='btn-lg mt-3 rounded-0'
 						color={behavior === 'create' ? 'green' : 'blue'}
 						appearance='ghost'
 						loading={form.saving}
@@ -238,23 +241,25 @@ const Colaboradores = () => {
 			</Modal>
 			<div className='row'>
 				<div className='col-12'>
-					<div className='w-100 d-flex justify-content-between'>
+					<div className='d-flex justify-content-end'>
+						<Button
+							className='bg-primary text-white rounded-0 mb-2 mt-0'
+							onClick={() => {
+								dispatch(updateColaborador({ behavior: 'create' }));
+								setComponent('drawer', true);
+							}}
+						>
+							<span className='mdi mdi-plus'>Novo Colaborador</span>
+						</Button>
+					</div>
+					<div className='w-100 d-flex'>
 						<h2 className='mb-4 mt-0'>Colaboradores</h2>
-						<div>
-							<button
-								className='btn btn-primary btn-lg custom-btn'
-								onClick={() => {
-									dispatch(updateColaborador({ behavior: 'create' }));
-									setComponent('drawer', true);
-								}}
-							>
-								<span className='mdi mdi-plus'>Novo Colaborador</span>
-							</button>
-						</div>
 					</div>
 					<Table
 						loading={form.filtering}
-						data={colaboradores.filter((colaborador) => colaborador.status === 'A')}
+						data={colaboradores.filter(
+							(colaborador) => colaborador.status === 'A'
+						)}
 						tableName={'Colaboradores'}
 						config={[
 							{
@@ -285,6 +290,7 @@ const Colaboradores = () => {
 						]}
 						actions={() => (
 							<Button
+								className='rounded-0'
 								style={{ color: 'white', backgroundColor: '#353D87' }}
 								size='xs'
 							>
