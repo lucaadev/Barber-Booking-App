@@ -47,7 +47,7 @@ const Agendamentos = () => {
 	}, [dispatch, start, end]);
 
 	return (
-		<div className='p-5 mt-5 overflow-auto h-100'>
+		<div className='p-5 mt-1 overflow-auto h-100'>
 			<div className='row'>
 				<div className='col-12'>
 					<h2 className='mb-4 mt-0 text-center'>Agendamentos</h2>
@@ -57,11 +57,16 @@ const Agendamentos = () => {
 							const { start, end } = formatRange(range);
 							dispatch(filterAgendamento(start, end));
 						}}
+						formats={{
+							dateFormat: 'dd',
+							dayFormat: (date, culture, localizer) =>
+								localizer.format(date, 'dddd', culture),
+						}}
 						events={formatedEvents}
 						selectable
 						popup
 						defaultView='week'
-						style={{ height: 600, zIndex: 0, position: 'relative' }}
+						style={{ height: 600, zIndex: 1, position: 'relative' }}
 					/>
 				</div>
 			</div>
