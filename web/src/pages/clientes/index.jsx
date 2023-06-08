@@ -45,11 +45,12 @@ const Clientes = () => {
 	}, [dispatch]);
 
 	return (
-		<div className='p-5 mt-5 overflow-auto h-100'>
+		<div className='p-5 mt-1 overflow-auto h-100'>
 			<Drawer
 				open={components.drawer}
 				size='sm'
 				onClose={() => setComponent('drawer', false)}
+				className={`responsive-drawer ${components.drawer ? 'open' : ''}`}
 			>
 				<Drawer.Body>
 					<h3>
@@ -62,7 +63,7 @@ const Clientes = () => {
 								<input
 									disabled={behavior === 'update'}
 									type='text'
-									className='form-control'
+									className='form-control rounded-0'
 									placeholder='Nome do cliente'
 									value={cliente.nome}
 									onChange={(e) => {
@@ -73,6 +74,7 @@ const Clientes = () => {
 									<div className='input-group-append'>
 										<Button
 											appearance='primary'
+											className='rounded-0'
 											loading={form.filtering}
 											disabled={form.filtering}
 											onClick={() => {
@@ -89,7 +91,7 @@ const Clientes = () => {
 							<b className=''>Nome</b>
 							<input
 								type='text'
-								className='form-control'
+								className='form-control rounded-0'
 								placeholder='Nome do Cliente'
 								disabled={form.disabled}
 								value={cliente.nome}
@@ -101,7 +103,7 @@ const Clientes = () => {
 							<b className=''>Telefone / Whatsapp</b>
 							<input
 								type='text'
-								className='form-control phone-input'
+								className='form-control phone-input rounded-0'
 								mask={option}
 								maxLength={11}
 								placeholder='Telefone / Whatsapp'
@@ -121,7 +123,7 @@ const Clientes = () => {
 					<Button
 						disabled={cliente.telefone === ''}
 						block
-						className='btn-lg mt-3'
+						className='btn-lg mt-3 rounded-0'
 						color={behavior === 'create' ? 'green' : 'red'}
 						appearance='ghost'
 						loading={form.saving}
@@ -173,19 +175,19 @@ const Clientes = () => {
 			</Modal>
 			<div className='row'>
 				<div className='col-12'>
-					<div className='w-100 d-flex justify-content-between'>
+					<div className='d-flex justify-content-end'>
+						<Button
+							className='bg-primary text-white rounded-0 mb-2 mt-0'
+							onClick={() => {
+								dispatch(updateCliente({ behavior: 'create' }));
+								setComponent('drawer', true);
+							}}
+						>
+							<span className='mdi mdi-plus'>Novo Cliente</span>
+						</Button>
+					</div>
+					<div className='w-100 d-flex justify-content-between align-items-center'>
 						<h2 className='mb-4 mt-0'>Clientes</h2>
-						<div>
-							<button
-								className='btn btn-primary btn-lg custom-btn'
-								onClick={() => {
-									dispatch(updateCliente({ behavior: 'create' }));
-									setComponent('drawer', true);
-								}}
-							>
-								<span className='mdi mdi-plus'>Novo Cliente</span>
-							</button>
-						</div>
 					</div>
 					<Table
 						loading={form.filtering}
@@ -214,6 +216,7 @@ const Clientes = () => {
 						]}
 						actions={(data) => (
 							<Button
+								className='rounded-0'
 								style={{ color: 'white', backgroundColor: '#353D87' }}
 								size='xs'
 							>
