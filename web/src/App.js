@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import './styles.css';
 
 import Header from './components/Header';
-import Sidebar from './components/Sidebar';
 import Agendamentos from './pages/agendamentos';
 import Clientes from './pages/clientes';
 import Colaboradores from './pages/colaboradores';
@@ -16,10 +15,7 @@ const App = () => {
       <Header />
       <div className="container-fluid h-100">
         <div className="row h-100">
-          <div className="row col-2">
-          <Sidebar />
-          </div>
-          <div className="col-10">
+          <div className="">
             <Routes>
               <Route path="/" exact element={<Agendamentos />} />
               <Route path="/clientes" element={<Clientes />} />
