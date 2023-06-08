@@ -1,18 +1,71 @@
+import { Link, useLocation } from 'react-router-dom';
 import logoPrincipal from '../../assets/logo-principal.png';
 
-const Header = () => {
-  return (
-    <header className="container-fluid d-flex justify-content-end" >
-      <div className="d-flex align-items-center">
-      <div className="text-end me-3">
-        <span className="d-block m-0 p-0 text-white">Barbearia Lisboa</span>
-        <small className="m-0 p-0">Plano Gold</small>  
-      </div>
-      <img src={logoPrincipal} alt="logo"/>
-      <span className="mdi mdi-chevron-down text-white"></span>
-      </div>
-    </header>
-  );
-};
+import { useRef } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import '../../styles.css'
+
+function Header() {
+  const location = useLocation();
+	const navRef = useRef();
+
+	const showNavbar = () => {
+		navRef.current.classList.toggle('responsive_nav');
+	};
+
+	return (
+		<header>
+			<img src={logoPrincipal} alt='logo' className='img-fluid mt-3 h-auto' />
+			<nav style={{ zIndex: 2 }} ref={navRef}>
+				<Link
+					to='/'
+					className={location.pathname === '/' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-calendar-check m-1'></span>
+					<span>Agendamentos</span>
+				</Link>
+				<Link
+					to='/clientes'
+					className={location.pathname === '/clientes' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-account-multiple m-1'></span>
+					<span>Clientes</span>
+				</Link>
+				<Link
+					to='/colaboradores'
+					className={location.pathname === '/colaboradores' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-card-account-details-outline m-1'></span>
+					<span>Colaboradores</span>
+				</Link>
+				<Link
+					to='/servicos'
+					className={location.pathname === '/servicos' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-content-cut m-1'></span>
+					<span>Servicos</span>
+				</Link>
+				<Link
+					to='/horarios'
+					className={location.pathname === '/horarios' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-clock-check-outline m-1'></span>
+					<span>Horários</span>
+				</Link>
+				<button className='nav-btn nav-close-btn' onClick={showNavbar}>
+					<FaTimes />
+				</button>
+			</nav>
+			<button className='nav-btn' onClick={showNavbar}>
+				<FaBars />
+			</button>
+		</header>
+	);
+}
 
 export default Header;
