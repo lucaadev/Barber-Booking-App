@@ -4,7 +4,14 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import { Button, DatePicker, Drawer, IconButton, Modal, TagPicker } from 'rsuite';
+import {
+	Button,
+	DatePicker,
+	Drawer,
+	IconButton,
+	Modal,
+	TagPicker,
+} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {
 	addHorario,
@@ -22,7 +29,15 @@ const localizer = momentLocalizer(moment);
 const Horarios = () => {
 	const dispatch = useDispatch();
 
-	const { horarios, horario, servicos, colaboradores, form, behavior, components } = useSelector((state) => state.horarioReducer);
+	const {
+		horarios,
+		horario,
+		servicos,
+		colaboradores,
+		form,
+		behavior,
+		components,
+	} = useSelector((state) => state.horarioReducer);
 
 	const semana = [
 		new Date(2023, 5, 4, 0, 0, 0, 0),
@@ -34,12 +49,18 @@ const Horarios = () => {
 		new Date(2023, 5, 10, 0, 0, 0, 0),
 	];
 
-	const diasDaSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-
+	const diasDaSemana = [
+		'Domingo',
+		'Segunda-feira',
+		'Terça-feira',
+		'Quarta-feira',
+		'Quinta-feira',
+		'Sexta-feira',
+		'Sábado',
+	];
 
 	const formatEvents = horarios.flatMap((horario) => {
 		return horario.dias.map((dia) => {
-
 			const startDate = new Date(semana[dia]);
 			startDate.setHours(
 				parseInt(moment(horario.inicio).format('HH')),
@@ -61,16 +82,14 @@ const Horarios = () => {
 		});
 	});
 
-		const setComponents = (component, state) => {
+	const setComponents = (component, state) => {
 		dispatch(
 			updateHorario({ components: { ...components, [component]: state } })
 		);
 	};
 
 	const setHorario = (key, value) => {
-		dispatch(
-			updateHorario({ horario: { ...horario, [key]: value } })
-		);
+		dispatch(updateHorario({ horario: { ...horario, [key]: value } }));
 	};
 
 	const save = () => {
@@ -91,7 +110,7 @@ const Horarios = () => {
 	}, [dispatch, horario.especialidades]);
 
 	return (
-		<div className='p-5 mt-5 overflow-auto h-100'>
+		<div className='p-5 mt-1 overflow-auto h-100'>
 			<Drawer
 				open={components.drawer}
 				size='sm'
@@ -99,6 +118,7 @@ const Horarios = () => {
 					setComponents('drawer', false);
 					dispatch(allServicos());
 				}}
+				className={`responsive-drawer ${components.drawer ? 'open' : ''}`}
 			>
 				<Drawer.Body>
 					<h3>{behavior === 'create' ? 'Novo ' : 'Atualizar '}Horário</h3>
@@ -113,6 +133,7 @@ const Horarios = () => {
 									.map((label, value) => ({ label, value }))
 									.slice(1)}
 								onChange={(value) => setHorario('dias', value)}
+								className='rounded-0'
 							/>
 						</div>
 						<div className='col-6 mt-3'>
@@ -145,6 +166,7 @@ const Horarios = () => {
 								data={servicos}
 								value={horario.especialidades}
 								onChange={(value) => setHorario('especialidades', value)}
+								className='rounded-0'
 							/>
 						</div>
 						<div className='col-12 mt-3'>
@@ -155,6 +177,7 @@ const Horarios = () => {
 								data={colaboradores}
 								value={horario.colaboradores}
 								onChange={(value) => setHorario('colaboradores', value)}
+								className='rounded-0'
 							/>
 						</div>
 					</div>
@@ -165,7 +188,7 @@ const Horarios = () => {
 						size='lg'
 						block
 						onClick={() => save()}
-						className='mt-3'
+						className='mt-3 rounded-0'
 					>
 						{behavior === 'create' ? 'Criar' : 'Atualizar'} Horário
 					</Button>
@@ -198,7 +221,8 @@ const Horarios = () => {
 						}}
 					/>
 					<p className='text-center'>
-						Tem certeza que deseja remover esse horário?<br />
+						Tem certeza que deseja remover esse horário?
+						<br />
 						Essa ação é irreversível!
 					</p>
 				</Modal.Body>
@@ -223,21 +247,21 @@ const Horarios = () => {
 			</Modal>
 			<div className='row'>
 				<div className='col-12'>
-					<div className='w-100 d-flex justify-content-between'>
-						<h3 className='mb-4 mt-0'>Horários</h3>
-						<div>
-							<button
-								className='btn btn-primary btn-lg custom-btn'
-								onClick={() => {
-									dispatch(updateHorario({ behavior: 'create' }));
-									dispatch(filterColaboradores());
-									dispatch(allServicos());
-									setComponents('drawer', true);
-								}}
-							>
-								<span className='mdi mdi-plus'>Novo Horário</span>
-							</button>
-						</div>
+					<div className='d-flex justify-content-end'>
+						<Button
+							className='bg-primary text-white rounded-0 mb-2 mt-0'
+							onClick={() => {
+								dispatch(updateHorario({ behavior: 'create' }));
+								dispatch(filterColaboradores());
+								dispatch(allServicos());
+								setComponents('drawer', true);
+							}}
+						>
+							<span className='mdi mdi-plus'>Novo Horário</span>
+						</Button>
+					</div>
+					<div className='w-100 d-flex justify-content-between align-items-center'>
+						<h2 className='mb-4 mt-0 text-dark'>Horários</h2>
 					</div>
 					<Calendar
 						localizer={localizer}
@@ -262,14 +286,17 @@ const Horarios = () => {
 						onSelectSlot={(slot) => {
 							const { start, end } = slot;
 							dispatch(allServicos());
-							dispatch(updateHorario({ 
-								behavior: 'create',
-								horario: {
-								...horario,
-								dias: [moment(start).day()],
-								inicio: start,
-								fim: end,
-							} }));
+							dispatch(
+								updateHorario({
+									behavior: 'create',
+									horario: {
+										...horario,
+										dias: [moment(start).day()],
+										inicio: start,
+										fim: end,
+									},
+								})
+							);
 							setComponents('drawer', true);
 						}}
 					/>
