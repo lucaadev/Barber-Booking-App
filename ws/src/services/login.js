@@ -4,7 +4,7 @@ const Cliente = require('../database/models/cliente');
 
 const createLogin = async ({telefone}) => {
   const userExists = await Cliente.findOne({ telefone }).exec();
-  if (!userExists) errorThrow(400, 'Cliente não cadastrado');
+  if (!userExists) throw errorThrow(400, 'Cliente não cadastrado');
   const userData = {
     id: userExists._id.toString(),
     nome: userExists.nome,
