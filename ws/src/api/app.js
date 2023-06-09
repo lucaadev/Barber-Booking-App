@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const salaoRoute = require('../routes/salao');
+const loginRoute = require('../routes/login');
 const servicoRoute = require('../routes/servico');
 const horarioRoute = require('../routes/horario');
 const clienteRoute = require('../routes/cliente');
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/salao', salaoRoute);
+app.use('/login', loginRoute);
 app.use('/servico', servicoRoute);
 app.use('/horario', horarioRoute);
 app.use('/cliente', clienteRoute);
