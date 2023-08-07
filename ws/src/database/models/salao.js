@@ -8,6 +8,7 @@ const salao = new Schema({
   },
   foto: String,
   capa: String,
+  logo: String,
   email: {
     type: String,
     required: [true, 'Email é obrigatório.'],
