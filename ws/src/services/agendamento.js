@@ -78,7 +78,7 @@ const getDisponibilidade = async (body) => {
   let colaboradores = [];
   let lastDay = moment(data);
 
-  const duracaoEmMinutos = parseInt(moment.duration(servico.duracao).asMinutes());
+  const duracaoEmMinutos = parseInt(moment(servico.duracao).minutes());
 
   const minutosSlots = sliceMinutes(
     moment(servico.duracao),
@@ -129,7 +129,7 @@ const getDisponibilidade = async (body) => {
         let horariosOcupados = agendamentos.map((agendamento) => ({
           inicio: moment(agendamento.data),
           fim: moment(agendamento.data).add(
-            parseInt(moment.duration(agendamento.servicoId.duracao).asMinutes()),
+            parseInt(moment(agendamento.servicoId.duracao).minutes()),
             'minutes'
           ),
         }));
@@ -142,7 +142,7 @@ const getDisponibilidade = async (body) => {
           )
         }).flat();
 
-        let horariosLives = splitByValue(
+        let horariosLivres = splitByValue(
           todosHorariosDoDia[colaboradorId].map((horario) => {
             return horariosOcupados.includes(horario) ? '-' : horario;
           }),
@@ -151,22 +151,22 @@ const getDisponibilidade = async (body) => {
           return horario.length > 0;
         });
 
-        horariosLives = horariosLives.filter((horario) => {
+        horariosLivres = horariosLivres.filter((horario) => {
           return horario.length >= minutosSlots;
         });
 
-        horariosLives = horariosLives.map((horario) => {
+        horariosLivres = horariosLivres.map((horario) => {
           return horario.filter((_slot, index) => {
             return horario.length - index >= minutosSlots;
           });
         }).flat();
 
-        horariosLives = _.chunk(horariosLives, 2);
+        horariosLivres = _.chunk(horariosLivres, 2);
 
-        if (horariosLives.length === 0) {
+        if (horariosLivres.length === 0) {
           todosHorariosDoDia = _.omit(todosHorariosDoDia, colaboradorId);
         } else {
-          todosHorariosDoDia[colaboradorId] = horariosLives;
+          todosHorariosDoDia[colaboradorId] = horariosLivres;
         }
       }
 
@@ -186,7 +186,7 @@ const getDisponibilidade = async (body) => {
 
   colaboradores = await Colaborador.find({
     _id: { $in: colaboradores },
-  }).select('nome capa');
+  }).select('nome foto');
 
   colaboradores = colaboradores.map((colaborador) => {
     return {
