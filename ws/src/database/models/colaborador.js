@@ -10,7 +10,6 @@ const colaborador = new Schema({
     type:String,
     required: true,
   },
-  capa: String,
   email: {
     type: String,
     required: [true, 'Email é obrigatório.'],
@@ -20,6 +19,7 @@ const colaborador = new Schema({
     default: '123456',
   },
   telefone: String,
+  foto: String,
   sexo: {
     type: String,
     enum: ['M', 'F'],
