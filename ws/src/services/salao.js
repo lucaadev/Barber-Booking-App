@@ -26,7 +26,7 @@ const getServicosBySalaoId = async (id) => {
 
 const getInfoById = async (id) => {
   const infos = await Salao.findById(id)
-    .select('nome foto capa telefone endereco.cidade geo.coordinates');
+    .select('nome foto capa images telefone endereco.cidade geo.coordinates');
 
   return infos;
 };
