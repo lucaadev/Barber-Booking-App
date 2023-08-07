@@ -276,6 +276,8 @@ const Horarios = () => {
 						selectable
 						defaultDate={semana[moment().day()]}
 						defaultView='week'
+						min={moment().startOf('day').add(8, 'hours').toDate()}
+						max={moment().startOf('day').add(20, 'hours').toDate()}
 						style={{ height: 600, zIndex: 0, position: 'relative' }}
 						onSelectEvent={(event) => {
 							dispatch(allServicos());
