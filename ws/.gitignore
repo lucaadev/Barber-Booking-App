@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#jwt
+jwt.evaluation.key
+
 # photos
 /uploads
 
