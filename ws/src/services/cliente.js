@@ -32,20 +32,33 @@ const newCliente = async (body) => {
 
     const  alreadyExistsRelation = await salaoCliente.findOne({
       clienteId: alreadyExistsCliente._id.toString(),
-      status: 'E',
+      status: { $in : ['A', 'E']}
     }).exec();
-
+    
     if (alreadyExistsRelation) {
       await salaoCliente.findOneAndUpdate(
         { salaoId: body.salaoId,
           clienteId: alreadyExistsCliente._id.toString(),
         },
-        { status: 'A' },
+        {
+          status: 'A',
+        },
         {session},
+      );
+      await Cliente.findOneAndUpdate(
+        { _id: alreadyExistsCliente._id.toString() },
+        {
+          nome: cliente.nome,
+        },
+        { session },
       );
       await session.commitTransaction();
       session.endSession();
-      return alreadyExistsCliente;
+      if (alreadyExistsRelation) {
+        return 'Conta atualizada com sucesso.';
+      } else {
+      return 'Conta criada com sucesso.'
+      }
     }
   } catch (error) {
     await session.abortTransaction();
