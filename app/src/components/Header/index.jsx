@@ -25,8 +25,6 @@ export default function Header() {
 
 	const { servicos } = servicosSalao;
 
-	console.log('images', salao?.images);
-
 	const finalServicos =
 		form.inputFiltro?.length > 0
 			? servicos.filter((servico) => {
