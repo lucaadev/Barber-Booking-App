@@ -32,7 +32,7 @@ export default function App() {
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
       catch (e) {
-        console.log(e);
+        alert('Erro ao carregar fontes', e.message);
       }
       finally {
         setIsAppReady(true);
@@ -54,15 +54,15 @@ export default function App() {
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <StoreProvider store={store}>
-      <PaperProvider>
-        <NavigationContainer>
-          <StatusBar barStyle="light-content" backgroundColor="#FDB02F" />
-          <Routes />
-        </NavigationContainer>
-      </PaperProvider>
-    </StoreProvider>
+        <PaperProvider>
+          <NavigationContainer>
+            <StatusBar barStyle="light-content" backgroundColor="#FDB02F" />
+            <Routes />
+          </NavigationContainer>
+        </PaperProvider>
+      </StoreProvider>
     </View>
-    
+
   );
 }
 
