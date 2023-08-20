@@ -134,13 +134,13 @@ const getDisponibilidade = async (body) => {
           ),
         }));
 
-        horariosOcupados = horariosOcupados.map((horario) => {
+        horariosOcupados = horariosOcupados.flatMap((horario) => {
           return sliceMinutes(
             horario.inicio,
             horario.fim,
             DURACAO_SLOT
           )
-        }).flat();
+        });
 
         let horariosLivres = splitByValue(
           todosHorariosDoDia[colaboradorId].map((horario) => {
@@ -155,11 +155,11 @@ const getDisponibilidade = async (body) => {
           return horario.length >= minutosSlots;
         });
 
-        horariosLivres = horariosLivres.map((horario) => {
+        horariosLivres = horariosLivres.flatMap((horario) => {
           return horario.filter((_slot, index) => {
             return horario.length - index >= minutosSlots;
           });
-        }).flat();
+        });
 
         horariosLivres = _.chunk(horariosLivres, 2);
 

@@ -70,7 +70,7 @@ export function* filterAgenda() {
     }));
 
   } catch (err) {
-    alert('Erro', err);
+    console.log(err);
   }
 }
 

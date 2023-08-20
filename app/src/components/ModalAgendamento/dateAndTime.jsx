@@ -160,7 +160,15 @@ export default function dateAndTime({
 					showsHorizontalScrollIndicator={false}
 					ListEmptyComponent={() => (
 						<View>
-							<Text>Puxa, não há horários disponíveis hoje.</Text>
+							<Text
+								style={{
+									fontSize: 15,
+									fontWeight: 400,
+									marginStart: 25,
+									marginTop: 20,
+									color: theme.colors.primary,
+								}}
+							>Puxa, não há horários disponíveis para a data escolhida.</Text>
 						</View>
 					)}
 					renderItem={({ item }) => (
