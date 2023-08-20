@@ -86,7 +86,7 @@ const getDisponibilidade = async (body) => {
     DURACAO_SLOT
   ).length;
 
-  for (let i = 0; i <= 365 && agenda.length <= 14; i += 1) {
+  for (let i = 0; i <= 16 && agenda.length <= 14; i += 1) {
     const espacosValidos = horarios.filter(horario => {
       const diasDisponiveis = horario.dias.includes(moment(lastDay).day());
 
