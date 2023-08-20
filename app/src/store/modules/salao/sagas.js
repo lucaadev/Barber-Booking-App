@@ -19,14 +19,14 @@ export function* getSalao() {
   try {
     const { data: res } = yield call(api.get, `/salao/${infos.salaoId}`);
     if (res.error) {
-      console.log(res.error);
+      alert('Erro', res.error);
       return;
     }
 
     yield put(updateSalao(res));
     yield put(updateAgendamento({ salaoId: res._id }));
   } catch (err) {
-    console.log(err);
+    alert('Erro', err);
   }
 }
 
@@ -34,13 +34,13 @@ export function* getServicos() {
   try {
     const { data: res } = yield call(api.get, `/servico/salao/${infos.salaoId}`);
     if (res.error) {
-      console.log(res.error);
+      alert('Erro', res.error)
       return;
     }
 
     yield put(updateServicos(res));
   } catch (err) {
-    console.log(err);
+    alert('Erro', err);
   }
 }
 
@@ -56,7 +56,7 @@ export function* filterAgenda() {
     yield put(updateAgendamento({ loading: false }));
 
     if (res.error) {
-      console.log(res.error);
+      alert('Erro', res.error);
       return;
     }
 
@@ -70,7 +70,7 @@ export function* filterAgenda() {
     }));
 
   } catch (err) {
-    console.log(err);
+    alert('Erro', err);
   }
 }
 
@@ -80,7 +80,7 @@ export function* saveAgendamento() {
     yield put(updateForm({ agendamentoLoading: true }));
 
     const { data: res } = yield call(api.post, `/agendamento`, agendamento);
-    
+
     yield put(updateForm({ agendamentoLoading: false }));
 
     if (res.error) {

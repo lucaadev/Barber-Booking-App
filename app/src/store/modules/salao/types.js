@@ -1,6 +1,7 @@
 const types = {
   GET_SALAO: '@salao/getSalao',
   UPDATE_SALAO: '@salao/updateSalao',
+  UPDATE_CLUB: '@salao/updateClub',
   ALL_SERVICOS: '@salao/allServicos',
   UPDATE_SERVICOS: '@salao/updateServicos',
   FILTER_AGENDA: '@agendamento/filterAgenda',
