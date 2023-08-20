@@ -65,3 +65,10 @@ export function saveAgendamento() {
     type: types.SAVE_AGENDAMENTO,
   };
 }
+
+export function updateClub(club) {
+  return {
+    type: types.UPDATE_CLUB,
+    payload: club,
+  };
+}

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from '../../../../app/src/services/api';
 
 import { updateCliente } from '../../store/modules/cliente/actions';
+import { getSalao } from '../../store/modules/salao/actions';
 
 import infos from '../../../src/consts';
 
@@ -69,8 +70,9 @@ export default function SignIn() {
 							id: response.data.id,
 							nome: response.data.nome,
 							token: response.data.token,
-						}
-					})
+						},
+					}),
+					dispatch(getSalao())
 				);
 				Navigation.navigate('Home');
 			}

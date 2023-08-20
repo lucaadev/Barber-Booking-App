@@ -4,13 +4,17 @@ import { List } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/core';
 import { Container } from '../../styles';
 import {
 	updateAgendamento,
 	filterAgenda,
+	updateClub,
 } from '../../store/modules/salao/actions';
 
 export default function Servicos(props) {
+	const Navigation = useNavigation();
+
 	const dispatch = useDispatch();
 
 	const servicos = props.servicos;
@@ -34,6 +38,9 @@ export default function Servicos(props) {
 					onPress={() => {
 						dispatch(updateAgendamento({ servicoId: servico._id }));
 						dispatch(filterAgenda());
+						isLisboaClubPage
+							? dispatch(updateClub(true)) && Navigation.navigate('Home')
+							: null;
 					}}
 				>
 					<List.Item
@@ -68,7 +75,16 @@ export default function Servicos(props) {
 							/>
 						)}
 						right={() => (
-							<TouchableOpacity style={styles.buttonAgendamento}>
+							<TouchableOpacity
+								style={styles.buttonAgendamento}
+								onPress={() => {
+									dispatch(updateAgendamento({ servicoId: servico._id }));
+									dispatch(filterAgenda());
+									isLisboaClubPage
+										? dispatch(updateClub(true)) && Navigation.navigate('Home')
+										: null;
+								}}
+							>
 								<Text style={styles.buttonText}>Agendar</Text>
 								<Icon name='calendar-blank' size={25} color='#fff' />
 							</TouchableOpacity>

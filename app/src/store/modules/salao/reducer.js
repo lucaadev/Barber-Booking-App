@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   servicosSalao: [],
   agenda: [],
   colaboradores: [],
+  club: false,
   agendamento: {
     loading: false,
     clienteId: '',
@@ -48,6 +49,9 @@ export const salaoReducer = createReducer(INITIAL_STATE, (builder) => {
   });
   builder.addCase(types.UPDATE_COLABORADORES, (state, action) => {
     state.colaboradores = _.uniq([...state.colaboradores, ...action.payload]);
+  });
+  builder.addCase(types.UPDATE_CLUB, (state, action) => {
+    state.club = action.payload;
   });
   builder.addDefaultCase((state, _action) => {
     return state;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, FlatList } from 'react-native';
+import { Text, TouchableOpacity, FlatList, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import moment from 'moment/min/moment-with-locales';
 import { Container } from '../../styles';
@@ -16,6 +16,24 @@ export default function dateAndTime({
 	horariosDisponiveis,
 }) {
 	const dispatch = useDispatch();
+
+	let wrongHours = [];
+
+	horariosDisponiveis.map((item) => {
+		return item.map((time) => {
+			if (time > '19:20' || (time >= '12:00' && time <= '13:00')) {
+				wrongHours.push(time);
+			} else {
+				return null;
+			}
+
+			wrongHours = wrongHours.filter((item) => item !== null);
+		});
+	});
+
+	const filteredHours = horariosDisponiveis.map((item) => {
+		return item.filter((time) => !wrongHours.includes(time));
+	});
 
 	const uniqueKeysSet = new Set();
 	const uniqueDates = [];
@@ -137,17 +155,26 @@ export default function dateAndTime({
 					Que horas?
 				</Text>
 				<FlatList
-					data={horariosDisponiveis}
+					data={filteredHours}
 					horizontal
 					showsHorizontalScrollIndicator={false}
+					ListEmptyComponent={() => (
+						<View>
+							<Text
+								style={{
+									fontSize: 15,
+									fontWeight: 400,
+									marginStart: 25,
+									marginTop: 20,
+									color: theme.colors.primary,
+								}}
+							>Puxa, não há horários disponíveis para a data escolhida.</Text>
+						</View>
+					)}
 					renderItem={({ item }) => (
 						<Container direction='column' wrap='wrap'>
 							{item.map((time) => {
-								const isLunchTime = time >= '12:00' && time <= '13:00';
 								const selected = time === horaSelecionada;
-								if (isLunchTime) {
-									return null;
-								}
 								return (
 									<TouchableOpacity
 										key={time}
