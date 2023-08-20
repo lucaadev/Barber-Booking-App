@@ -21,7 +21,7 @@ export default function dateAndTime({
 
 	horariosDisponiveis.map((item) => {
 		return item.map((time) => {
-			if (time > '19:20' || time >= '12:00' && time <= '13:00') {
+			if (time > '19:20' || (time >= '12:00' && time <= '13:00')) {
 				wrongHours.push(time);
 			} else {
 				return null;
@@ -31,7 +31,6 @@ export default function dateAndTime({
 		});
 	});
 
-	
 	const filteredHours = horariosDisponiveis.map((item) => {
 		return item.filter((time) => !wrongHours.includes(time));
 	});
@@ -161,9 +160,7 @@ export default function dateAndTime({
 					showsHorizontalScrollIndicator={false}
 					ListEmptyComponent={() => (
 						<View>
-							<Text>
-								Puxa, não há horários disponíveis hoje.
-							</Text>
+							<Text>Puxa, não há horários disponíveis hoje.</Text>
 						</View>
 					)}
 					renderItem={({ item }) => (

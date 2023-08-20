@@ -96,7 +96,12 @@ export default function Header() {
 					)
 				}
 			>
-				<Cover source={{ uri: salao?.images[1] }} width={100} height={300} zIndex={0}></Cover>
+				<Cover
+					source={{ uri: salao?.images[1] }}
+					width={100}
+					height={300}
+					zIndex={0}
+				></Cover>
 			</TouchableOpacity>
 			<Container>
 				<Cover

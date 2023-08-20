@@ -70,7 +70,7 @@ export default function SignIn() {
 							id: response.data.id,
 							nome: response.data.nome,
 							token: response.data.token,
-						}
+						},
 					}),
 					dispatch(getSalao())
 				);
