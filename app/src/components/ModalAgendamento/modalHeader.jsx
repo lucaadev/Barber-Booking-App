@@ -1,11 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Container, GradientView } from '../../styles';
 import theme from '../../styles/theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch } from 'react-redux';
+import { updateClub } from '../../store/modules/salao/actions';
 
-export default function ModalHeader({handleSnap}) {
-  return (
+export default function ModalHeader({ handleSnap }) {
+	const dispatch = useDispatch();
+
+	return (
 		<View style={styles.headerContainer}>
 			<GradientView
 				colors={[theme.colors.dark, theme.colors.purple]}
@@ -14,8 +18,9 @@ export default function ModalHeader({handleSnap}) {
 			>
 				<Container>
 					<TouchableOpacity
-					  style={styles.button}
+						style={styles.button}
 						onPress={() => {
+							dispatch(updateClub(false));
 							handleSnap(0);
 						}}
 					>
@@ -32,7 +37,11 @@ export default function ModalHeader({handleSnap}) {
 							</Text>
 							<Text
 								small
-								style={{ color: theme.colors.white, fontWeight: '200', opacity: 0.8 }}
+								style={{
+									color: theme.colors.white,
+									fontWeight: '200',
+									opacity: 0.8,
+								}}
 							>
 								Escolha o profissional, o horário e o especialista.
 							</Text>

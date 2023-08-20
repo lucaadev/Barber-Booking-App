@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { Container, TextInput } from '../../styles';
@@ -9,10 +9,26 @@ import Servicos from '../../components/Servicos/index';
 
 export default function LisboaClub() {
 	const navigation = useNavigation();
+	const dispatch = useDispatch();
 
 	const { cliente } = useSelector((state) => state.clienteReducer);
 
-  const firstName = cliente.nome.split(' ')[0];
+	const firstName = cliente.nome.split(' ')[0];
+
+	const { salao, servicosSalao, form } = useSelector(
+		(state) => state.salaoReducer
+	);
+
+	const { servicos } = servicosSalao;
+
+	const finalServicos =
+		form.inputFiltro?.length > 0
+			? servicos.filter((servico) => {
+					const nome = servico.nome.toLowerCase();
+					const filtro = form.inputFiltro.toLowerCase().trim().split(' ');
+					return filtro.every((palavra) => nome.includes(palavra));
+			  })
+			: servicos;
 
 	return (
 		<>
@@ -23,16 +39,25 @@ export default function LisboaClub() {
 				<Icon name='chevron-left' size={45} color={theme.colors.primary} />
 			</TouchableOpacity>
 			<Text style={styles.textTitle}>Lisboa Club</Text>
-			<Text style={styles.textBemVindo}>Olá, {firstName}!{'\n'}
-      O Lisboa Club foi criado com a intenção de facilitar o seu cuidado com o visual e garantir um valor mais acessível para os nossos clientes.</Text>
+			<Text style={styles.textBemVindo}>
+				Olá, {firstName}!{'\n'}O Lisboa Club foi criado com a intenção de
+				facilitar o seu cuidado com o visual e garantir um valor mais acessível
+				para os nossos clientes.
+			</Text>
 			<Container style={styles.container}>
 				<Container
 					hasPadding
 					direction='column'
 					style={{ position: 'absolute' }}
 				>
-					<TextInput placeholder='Pesquisar serviço Club' />
-					<Servicos currentPage='LisboaClub'/>
+					<TextInput
+						style={styles.input}
+						placeholder='Pesquisar serviço Club'
+						onChangeText={(text) => dispatch(updateForm({ inputFiltro: text }))}
+						onFocus={() => dispatch(updateForm({ inputFiltroFoco: true }))}
+						onblur={() => dispatch(updateForm({ inputFiltroFoco: false }))}
+					/>
+					<Servicos servicos={finalServicos} currentPage='LisboaClub'/>
 				</Container>
 			</Container>
 		</>
@@ -65,14 +90,9 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	input: {
-		backgroundColor: '#fff',
-		borderRadius: 10,
-		paddingVertical: 10,
-		paddingHorizontal: 15,
+		marginTop: 20,
 		marginBottom: 20,
-		borderWidth: 1,
-		borderColor: theme.colors.primary,
-		fontSize: 16,
+		backgroundColor: '#00000000',
 	},
 	buttonVoltar: {
 		flexDirection: 'row',
