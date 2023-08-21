@@ -1,5 +1,5 @@
 const idInfos = {
-  salaoId: '64529ff05928d28005a60ebd',
+  salaoId: '64e2be7780c58f001c387051',
   clienteId: '64663964c88fcaf1c318da9d',
 };
 
