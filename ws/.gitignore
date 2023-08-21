@@ -8,9 +8,6 @@
 #jwt
 jwt.evaluation.key
 
-# photos
-/uploads
-
 # testing
 /coverage
 
