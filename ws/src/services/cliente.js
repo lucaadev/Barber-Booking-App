@@ -1,13 +1,9 @@
-const mongoose = require('mongoose');
 const Cliente = require('../database/models/cliente');
 const salaoCliente = require('../database/models/relationships/salaoCliente');
 const errorThrow = require('../utils/errorThrow');
 
 const newCliente = async (body) => {
-  const db = mongoose.connection;
-  const session = await db.startSession();
-  session.startTransaction();
-  
+
   try {
     const {cliente} = body;
     const alreadyExistsCliente = await Cliente.findOne({ telefone: cliente.telefone }).exec();
@@ -16,17 +12,15 @@ const newCliente = async (body) => {
       const newCliente = await new Cliente({
         nome: cliente.nome,
         telefone: cliente.telefone,
-      }).save({ session });
+      }).save();
 
       const clienteId = newCliente._id.toString();
 
       await new salaoCliente({
         salaoId: body.salaoId,
         clienteId,
-      }).save({ session });
+      }).save();
 
-      await session.commitTransaction();
-      session.endSession();
       return newCliente;
     }
 
@@ -43,17 +37,14 @@ const newCliente = async (body) => {
         {
           status: 'A',
         },
-        {session},
       );
       await Cliente.findOneAndUpdate(
         { _id: alreadyExistsCliente._id.toString() },
         {
           nome: cliente.nome,
         },
-        { session },
       );
-      await session.commitTransaction();
-      session.endSession();
+
       if (alreadyExistsRelation) {
         return 'Conta atualizada com sucesso.';
       } else {
@@ -61,16 +52,11 @@ const newCliente = async (body) => {
       }
     }
   } catch (error) {
-    await session.abortTransaction();
     throw error;
   }
 };
 
 const updateCliente = async (id, body) => {
-  const db = mongoose.connection;
-  const session = await db.startSession();
-  session.startTransaction();
-
   try {
     const { cliente } = body;
     const alreadyExistsCliente = await Cliente.findOne({ telefone: cliente.telefone }).exec();
@@ -79,14 +65,11 @@ const updateCliente = async (id, body) => {
     const updatedCliente = await Cliente.findOneAndUpdate(
       { _id: id },
       { nome: cliente.nome, telefone: cliente.telefone },
-      { new: true, session },
+      { new: true },
     ).exec();
 
-    await session.commitTransaction();
-    session.endSession();
     return { message: 'Cliente atualizado com sucesso.', updatedCliente };
   } catch (error) {
-    await session.abortTransaction();
     throw error;
   }
 };

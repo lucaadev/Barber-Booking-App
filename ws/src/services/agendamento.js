@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const moment = require('moment');
 const errorThrow = require('../utils/errorThrow');
 const { sliceMinutes, DURACAO_SLOT } = require('../utils/sliceMinutes');
@@ -14,13 +13,9 @@ const Salao = require('../database/models/salao');
 const Servico = require('../database/models/servico');
 
 const newAgendamento = async (body) => {
-  const db = mongoose.connection;
-  const session = await db.startSession();
-  session.startTransaction();
   try {
     const { clienteId, colaboradorId, servicoId, salaoId } = body;
 
-    // verifica se o horário está disponível
     const agendamento = await Agendamento.findOne({
       colaboradorId,
       data: body.data,
@@ -37,16 +32,11 @@ const newAgendamento = async (body) => {
     const newAgendamento = await new Agendamento({
       ...body,
       valor: servico.valor,
-    }).save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    }).save();
 
     return { ...newAgendamento._doc, cliente, colaborador, servico, salao };
 
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     throw error;
   }
 };

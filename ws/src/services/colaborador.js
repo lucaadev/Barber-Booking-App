@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const _ = require('lodash');
 const errorThrow = require('../utils/errorThrow');
 const Colaborador = require('../database/models/colaborador');
@@ -6,17 +5,13 @@ const SalaoColaborador = require('../database/models/relationships/salaoColabora
 const ColaboradorServico = require('../database/models/relationships/colaboradorServico');
 
 const createColaborador = async (body) => {
-  const db = mongoose.connection;
-  const session = await db.startSession();
-  session.startTransaction();
-
   try {
     const { colaborador, salaoId } = body;
     const alreadyExistsColaborator = await Colaborador.findOne({ email: colaborador.email }).exec();
 
     if (alreadyExistsColaborator) throw errorThrow(409, 'Esse endereço de e-mail já está cadastrado.');
 
-    const newColaborador = await new Colaborador(colaborador).save({ session });
+    const newColaborador = await new Colaborador(colaborador).save();
 
     const colaboradorId = alreadyExistsColaborator
       ? alreadyExistsColaborator._id
@@ -34,18 +29,14 @@ const createColaborador = async (body) => {
       salaoId,
       colaboradorId,
       status: newColaborador.status,
-    }).save({ session });
+    }).save();
 
     await ColaboradorServico.insertMany(
-      colaborador.servicos.map(servicoId => ({ servicoId, colaboradorId }), { session }),
+      colaborador.servicos.map(servicoId => ({ servicoId, colaboradorId })),
     );
-
-    await session.commitTransaction();
-    session.endSession();
-
+  
     return newColaborador;
   } catch (error) {
-    await session.abortTransaction();
     throw error;
   };
 };
