@@ -1,4 +1,6 @@
 const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 const aws = require('../utils/aws/aws');
 const Arquivo = require('../database/models/arquivo');
 const Servico = require('../database/models/servico');
@@ -6,7 +8,11 @@ const errorThrow = require('../utils/errorThrow');
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, '../../../ws/uploads');
+		const uploadsPath = path.join(__dirname, '../../uploads');
+		if (!fs.existsSync(uploadsPath)) {
+			fs.mkdirSync(uploadsPath);
+		}
+		cb(null, uploadsPath);
 	},
 	filename: function (req, file, cb) {
 		const splitName = file.originalname.split('.');
