@@ -7,7 +7,7 @@ const errorThrow = require('../utils/errorThrow');
 // Configuração do Multer
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, './uploads'); // Especifique o diretório onde os arquivos serão salvos
+		cb(null, '../../uploads'); // Especifique o diretório onde os arquivos serão salvos
 	},
 	filename: function (req, file, cb) {
 		const splitName = file.originalname.split('.');
