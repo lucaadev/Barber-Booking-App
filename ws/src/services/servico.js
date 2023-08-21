@@ -1,26 +1,26 @@
 const multer = require('multer');
+const path = require('path');
 const aws = require('../utils/aws/aws');
 const Arquivo = require('../database/models/arquivo');
 const Servico = require('../database/models/servico');
 const errorThrow = require('../utils/errorThrow');
 
-// Configuração do Multer
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, '../../uploads'); // Especifique o diretório onde os arquivos serão salvos
+		const absolutePath = path.join(__dirname, '../../uploads');
+		cb(null, absolutePath);
 	},
 	filename: function (req, file, cb) {
 		const splitName = file.originalname.split('.');
 		const fileName = `${new Date().getTime()}.${
 			splitName[splitName.length - 1]
 		}`;
-		cb(null, fileName); // Use um nome único para o arquivo
+		cb(null, fileName);
 	},
 });
 
 const upload = multer({ storage: storage }).any();
 
-// Função para lidar com o upload de arquivos usando o Multer
 const handleFileUpload = async (req) => {
 	return new Promise((resolve, reject) => {
 		upload(req, null, async (error) => {
@@ -52,11 +52,9 @@ const handleFileUpload = async (req) => {
 					throw errorThrow(errors[0].message);
 				}
 
-				// Criar Serviço
 				let jsonServico = JSON.parse(servico);
 				const novoServico = await Servico(jsonServico).save();
 
-				// Criar arquivo
 				arquivos = arquivos.map((arquivo) => ({
 					referenciaId: novoServico._id,
 					model: 'Servico',
@@ -101,11 +99,9 @@ const updateServico = async (req) => {
 					throw errorThrow(errors[0].message);
 				}
 
-				// Criar Serviço
 				const novoServico = JSON.parse(servico);
 				await Servico.findByIdAndUpdate(req.params.id, novoServico);
 
-				// Criar arquivo
 				arquivos = arquivos.map((arquivo) => ({
 					referenciaId: req.params.id,
 					model: 'Servico',
