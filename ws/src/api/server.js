@@ -2,7 +2,7 @@ const app = require('../api/app');
 const connectToDatabase = require('../database/config/config');
 require('dotenv').config();
 
-const PORT = process.env.API_PORT;
+const PORT = process.env.PORT;
 connectToDatabase()
   .then(() => {
     app.listen(PORT, () => console.log(`Running server on port: ${PORT}`));
