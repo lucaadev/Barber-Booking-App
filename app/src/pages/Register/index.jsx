@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from '../../../../app/src/services/api';
 
 import { updateCliente } from '../../store/modules/cliente/actions';
-import consts from '../../consts';
+import { EXPO_PUBLIC_SALAO_ID } from '@env';
 
 export default function Register() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ export default function Register() {
 				);
 			} else {
 				const response = await api.post('/cliente', {
-					salaoId: consts.salaoId,
+					salaoId: EXPO_PUBLIC_SALAO_ID,
 					cliente: {
 						nome: cliente.nome,
 						telefone: cliente.telefone,

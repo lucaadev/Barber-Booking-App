@@ -2,7 +2,6 @@ import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import moment from 'moment';
 
 import api from '../../../services/api';
-import infos from '../../../consts';
 import types from './types';
 import selectAgendamento from '../../../utils/selectAgendamento';
 
@@ -15,9 +14,11 @@ import {
   updateForm,
 } from './actions';
 
+import { EXPO_PUBLIC_SALAO_ID } from '@env';
+
 export function* getSalao() {
   try {
-    const { data: res } = yield call(api.get, `/salao/${infos.salaoId}`);
+    const { data: res } = yield call(api.get, `/salao/${EXPO_PUBLIC_SALAO_ID}`);
     if (res.error) {
       alert('Erro', res.error);
       return;
@@ -32,7 +33,7 @@ export function* getSalao() {
 
 export function* getServicos() {
   try {
-    const { data: res } = yield call(api.get, `/servico/salao/${infos.salaoId}`);
+    const { data: res } = yield call(api.get, `/servico/salao/${EXPO_PUBLIC_SALAO_ID}`);
     if (res.error) {
       alert('Erro', res.error)
       return;
@@ -50,7 +51,7 @@ export function* filterAgenda() {
     yield put(updateAgendamento({ loading: true }));
     const { data: res } = yield call(api.post, `/agendamento/disponibilidade-horarios`, {
       servicoId: agendamento.servicoId,
-      salaoId: infos.salaoId,
+      salaoId: EXPO_PUBLIC_SALAO_ID,
       data: moment().format('YYYY-MM-DD'),
     });
     yield put(updateAgendamento({ loading: false }));

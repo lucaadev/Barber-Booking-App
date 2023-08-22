@@ -19,7 +19,7 @@ import api from '../../../../app/src/services/api';
 import { updateCliente } from '../../store/modules/cliente/actions';
 import { getSalao } from '../../store/modules/salao/actions';
 
-import infos from '../../../src/consts';
+import { EXPO_PUBLIC_LOGO } from '@env';
 
 export default function SignIn() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -130,7 +130,7 @@ tente novamente mais tarde.`,
 			<Animatable.Image
 				animation={'fadeIn'}
 				delay={500}
-				source={{ uri: infos.logo }}
+				source={{ uri: EXPO_PUBLIC_LOGO }}
 				style={{
 					borderRadius: 100,
 					width: 200,
