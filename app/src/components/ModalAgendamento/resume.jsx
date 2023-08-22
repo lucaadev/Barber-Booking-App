@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import theme from '../../styles/theme';
+import { EXPO_PUBLIC_BUCKET_URL } from '@env'
 
 export default function Resume({ servico }) {
 	const { club } = useSelector((state) => state.salaoReducer);
@@ -11,7 +12,7 @@ export default function Resume({ servico }) {
 		<View style={styles.mainContainer}>
 			<Image
 				source={{
-					uri: `https://barbearia-lisboa-dev.s3.amazonaws.com/${servico?.arquivos[0]?.caminho}`,
+					uri: `${EXPO_PUBLIC_BUCKET_URL}${servico?.arquivos[0]?.caminho}`,
 				}}
 				style={styles.imageContainer}
 			/>

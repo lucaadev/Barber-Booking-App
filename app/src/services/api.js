@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { EXPO_PUBLIC_URL } from '@env';
 
-const API_URL = 'https://37f4-45-237-105-212.ngrok-free.app';
+const API_URL = EXPO_PUBLIC_URL;
 
 const api = axios.create({
   baseURL: API_URL,

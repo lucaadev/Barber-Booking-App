@@ -11,6 +11,7 @@ import {
 	filterAgenda,
 	updateClub,
 } from '../../store/modules/salao/actions';
+import { EXPO_PUBLIC_BUCKET_URL } from '@env';
 
 export default function Servicos(props) {
 	const Navigation = useNavigation();
@@ -69,7 +70,7 @@ export default function Servicos(props) {
 						left={() => (
 							<Image
 								source={{
-									uri: `https://barbearia-lisboa-dev.s3.amazonaws.com/${servico?.arquivos[0]?.caminho}`,
+									uri: `${EXPO_PUBLIC_BUCKET_URL}${servico?.arquivos[0]?.caminho}`,
 								}}
 								style={styles.imageServico}
 							/>
