@@ -60,7 +60,7 @@ export default function Header() {
 			/>
 			<View>
 				<Cover
-					source={{ uri: salao?.images[0] }}
+					source={{ uri: salao?.images?.[0] }}
 					width={110}
 					height={300}
 					opacity={0.5}
@@ -97,7 +97,7 @@ export default function Header() {
 				}
 			>
 				<Cover
-					source={{ uri: salao?.images[1] }}
+					source={{ uri: salao?.images?.[1] }}
 					width={100}
 					height={300}
 					zIndex={0}
@@ -105,7 +105,7 @@ export default function Header() {
 			</TouchableOpacity>
 			<Container>
 				<Cover
-					source={{ uri: salao?.images[2] }}
+					source={{ uri: salao?.images?.[2] }}
 					width={100}
 					height={1000}
 					zIndex={0}
