@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import logoPrincipal from '../../assets/logo-principal.png';
 
 import { useRef } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -15,7 +14,11 @@ function Header() {
 
 	return (
 		<header>
-			<img src={logoPrincipal} alt='logo' className='img-fluid mt-3 h-auto' />
+			<img
+				src={process.env.REACT_APP_LOGO}
+				alt='logo'
+				className='img-fluid mt-3 h-auto rounded-circle'
+			/>
 			<nav style={{ zIndex: 2 }} ref={navRef}>
 				<Link
 					to='/'
