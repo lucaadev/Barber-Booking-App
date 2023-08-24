@@ -67,15 +67,34 @@ const Horarios = () => {
 				parseInt(moment(horario.inicio).format('mm'))
 			);
 
+			startDate.setHours(startDate.getHours() + 3);
+
 			const endDate = new Date(semana[dia]);
 			endDate.setHours(
 				parseInt(moment(horario.fim).format('HH')),
 				parseInt(moment(horario.fim).format('mm'))
 			);
 
+			const especialidades = horario.especialidadesNames.map(
+				(especialidade) => especialidade
+			);
+
+			const colaboradores = horario.colaboradoresNames.map(
+				(colaborador) => colaborador
+			);
+
 			return {
 				resource: horario,
-				title: `especialidades: ${horario.especialidades.length} colaboradores: ${horario.colaboradores.length}`,
+				title: (
+					<div>
+						Especialidades: <br />
+						{especialidades.join(', ')}
+						<br />
+						<br />
+						Colaboradores: <br />
+						{colaboradores.join(', ')}
+					</div>
+				),
 				start: startDate,
 				end: endDate,
 			};
