@@ -1,5 +1,6 @@
 const Horario = require('../database/models/horario');
-// const errorThrow = require('../utils/errorThrow');
+const Colaborador = require('../database/models/colaborador');
+const Servico = require('../database/models/servico');
 
 const createHorario = async (body) => {
   const horario = await new Horario(body).save();
@@ -8,7 +9,31 @@ const createHorario = async (body) => {
 
 const getHorarioOfSalaoById = async (id) => {
   const horarios = await Horario.find({ salaoId: id });
-  return {horarios: horarios};
+  const colaboradores = await Colaborador.find({ id: horarios.colaboradores }).select('_id nome');
+  const servicos = await Servico.find({ salaoId: id }).select('_id nome');
+
+  const servicosMap = servicos.reduce((map, servico) => {
+    map[servico._id.toString()] = servico.nome;
+    return map;
+  }, {});
+
+  const colaboradoresMap = colaboradores.reduce((map, colaborador) => {
+    map[colaborador._id.toString()] = colaborador.nome;
+    return map;
+  }, {});
+
+  const updatedHorarios = horarios.map(horario => {
+    const updatedEspecialidades = horario.especialidades.map(especialidadeId =>
+      servicosMap[especialidadeId.toString()] || especialidadeId
+    );
+    const updatedColaboradores = horario.colaboradores.map(colaboradorId =>
+      colaboradoresMap[colaboradorId.toString()] || colaboradorId
+    );
+
+    return { ...horario._doc, especialidadesNames: updatedEspecialidades, colaboradoresNames: updatedColaboradores };
+  });
+
+  return {horarios: updatedHorarios};
 };
 
 const updateHorario = async (id, body) => {
