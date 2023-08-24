@@ -1,6 +1,5 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import consts from '../../../consts';
 import {
   updateColaborador,
   fetchColaboradores as fetchColaboradoresAction,
@@ -8,11 +7,13 @@ import {
 } from './actions';
 import types from './types';
 
+const salaoId = process.env.SALAO_ID;
+
 export function* fetchColaboradores() {
   const { form } = yield select(state => state.colaboradorReducer);
   try {
     yield put(updateColaborador({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/salao/colaboradores/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/salao/colaboradores/${salaoId}`);
     yield put(updateColaborador({ form: { ...form, filtering: false } }));
 
     if (res.error) {
@@ -79,7 +80,7 @@ export function* addColaborador() {
 
     if (behavior === 'create') {
       const response = yield call(api.post, '/colaborador', {
-        salaoId: consts.salaoId,
+        salaoId: salaoId,
         colaborador,
       });
       res = response.data;
@@ -145,7 +146,7 @@ export function* allServicos() {
   const { form } = yield select(state => state.colaboradorReducer);
   try {
     yield put(updateColaborador({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/salao/servicos/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/salao/servicos/${salaoId}`);
     yield put(updateColaborador({ form: { ...form, filtering: false } }));
 
     if (res.error) {

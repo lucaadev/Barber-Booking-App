@@ -1,6 +1,5 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import consts from '../../../consts';
 import {
   updateCliente,
   fetchClientes as fetchClientesAction,
@@ -8,11 +7,13 @@ import {
 } from './actions';
 import types from './types';
 
+const salaoId = process.env.SALAO_ID;
+
 export function* fetchClientes() {
   const { form } = yield select(state => state.clienteReducer);
   try {
     yield put(updateCliente({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/cliente/salao/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/cliente/salao/${salaoId}`);
     yield put(updateCliente({ form: { ...form, filtering: false } }));
 
     if (res.error) {
@@ -62,7 +63,7 @@ export function* addCliente() {
   try {
     yield put(updateCliente({ form: { ...form, saving: true } }));
     const { data: res } = yield call(api.post, '/cliente', {
-      salaoId: consts.salaoId,
+      salaoId: salaoId,
       cliente: {
         nome: cliente.nome,
         telefone: cliente.telefone,
