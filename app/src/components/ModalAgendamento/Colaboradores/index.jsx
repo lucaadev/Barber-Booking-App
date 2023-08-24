@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../../../styles/theme';
 import { updateAgendamento } from '../../../store/modules/salao/actions';
+import _ from 'lodash';
 
 export default function ColaboradorPicker({
 	colaboradores,
@@ -28,9 +29,22 @@ export default function ColaboradorPicker({
 		}
 	}
 
-	const colaboradoresDisponiveis = colaboradores.filter((colaborador) =>
-		colaboradoresDisponiveisId.includes(colaborador._id)
-	);
+const colaboradoresDisponiveisIdUnicos = _.uniq(colaboradoresDisponiveisId);
+
+const colaboradoresDisponiveisUnicos = colaboradores.filter((colaborador) =>
+	colaboradoresDisponiveisIdUnicos.includes(colaborador._id)
+);
+
+const uniqueItems = [];
+const colaboradoresDisponiveis = colaboradoresDisponiveisUnicos.filter(
+	(item) => {
+		if (!uniqueItems.includes(item._id)) {
+			uniqueItems.push(item._id);
+			return true;
+		}
+		return false;
+	}
+);
 
 	return (
 		<>
@@ -49,11 +63,11 @@ export default function ColaboradorPicker({
 				data={colaboradoresDisponiveis}
 				horizontal
 				showsHorizontalScrollIndicator={false}
-				renderItem={({ item }) => {
+				renderItem={({ item, index }) => {
 					const selected = agendamento.colaboradorId === item?._id;
 					return (
 						<TouchableOpacity
-							key={item?._id}
+							key={item?._id + index}
 							direction='column'
 							style={{
 								width: 110,

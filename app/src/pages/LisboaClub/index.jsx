@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Container, TextInput } from '../../styles';
 import theme from '../../styles/theme';
 import Servicos from '../../components/Servicos/index';
+import { updateForm } from '../../store/modules/salao/actions';
 
 export default function LisboaClub() {
 	const navigation = useNavigation();

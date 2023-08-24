@@ -80,7 +80,7 @@ export default function ModalAgendamento() {
 					>
 						<ModalHeader handleSnap={handleSnapTo} />
 						<ImageBackground
-							source={{ uri: salao?.images[2] }}
+							source={{ uri: salao?.images?.[2] }}
 							style={{
 								position: 'absolute',
 								width: '100%',
