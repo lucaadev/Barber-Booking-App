@@ -1,6 +1,5 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import consts from '../../../consts';
 import {
   updateHorario,
   fetchHorarios as fetchHorariosAction,
@@ -8,11 +7,13 @@ import {
 } from './actions';
 import types from './types';
 
+const salaoId = process.env.SALAO_ID;
+
 export function* fetchHorarios() {
   const { form } = yield select(state => state.horarioReducer);
   try {
     yield put(updateHorario({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/horario/salao/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/horario/salao/${salaoId}`);
     yield put(updateHorario({ form: { ...form, filtering: false } }));
 
     if (res.error) {
@@ -30,7 +31,7 @@ export function* allServicos() {
   const { form } = yield select(state => state.horarioReducer);
   try {
     yield put(updateHorario({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/salao/servicos/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/salao/servicos/${salaoId}`);
     yield put(updateHorario({ form: { ...form, filtering: false } }));
 
     if (res.error) {
@@ -53,7 +54,7 @@ export function* addHorario() {
     if (behavior === 'create') {
       const response = yield call(api.post, '/horario', {
         ...horario,
-        salaoId: consts.salaoId,
+        salaoId: salaoId,
       });
       res = response.data;
     } else {

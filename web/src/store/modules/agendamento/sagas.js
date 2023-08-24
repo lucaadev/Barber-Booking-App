@@ -3,14 +3,13 @@ import api from '../../../services/api';
 
 import { updateAgendamento } from './actions';
 import types from './types';
-import consts from '../../../consts';
 
 export function* filterAgendamento(action) {
   try {
     const { start, end } = action;
 
     const {data: res} = yield call(api.post, '/agendamento/filter', {
-        salaoId: consts.salaoId,
+        salaoId: process.env.SALAO_ID,
         periodo: {
           inicio: start,
           fim: end

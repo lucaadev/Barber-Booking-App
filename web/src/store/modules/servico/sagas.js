@@ -1,6 +1,5 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import consts from '../../../consts';
 import {
   updateServico,
   fetchServicos as fetchServicosAction,
@@ -8,11 +7,13 @@ import {
 } from './actions';
 import types from './types';
 
+const salaoId = process.env.SALAO_ID;
+
 export function* fetchServicos() {
   const { form } = yield select(state => state.servicoReducer);
   try {
     yield put(updateServico({ form: { ...form, filtering: true } }));
-    const { data: res } = yield call(api.get, `/servico/salao/${consts.salaoId}`);
+    const { data: res } = yield call(api.get, `/servico/salao/${salaoId}`);
     yield put(updateServico({ form: { ...form, filtering: false } }));
 
     if (res.error) {
@@ -34,8 +35,8 @@ export function* addServico() {
     let res = {};
 
     const formData = new FormData();
-    formData.append('servico', JSON.stringify({ ...servico, salaoId: consts.salaoId }));
-    formData.append('salaoId', consts.salaoId);
+    formData.append('servico', JSON.stringify({ ...servico, salaoId: salaoId }));
+    formData.append('salaoId', salaoId);
     servico.arquivos.forEach((arquivo, i) => {
       formData.append(`arquivo${i}`, arquivo);
     });
