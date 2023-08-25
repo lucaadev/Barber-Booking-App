@@ -14,3 +14,17 @@ export function updateAgendamento(agendamentos) {
     agendamentos
   }
 }
+
+export function updateModal(modal) {
+  return {
+    type: types.UPDATE_MODAL_AGENDAMENTO,
+    modal
+  }
+}
+
+export function updateEvent(event) {
+  return {
+    type: types.UPDATE_EVENT_AGENDAMENTO,
+    event
+  }
+}
