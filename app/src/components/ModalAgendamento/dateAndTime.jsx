@@ -110,6 +110,21 @@ const DateAndTime = memo(
 
 		let wrongHours = [];
 
+		const now = moment();
+
+		const currentDate = now.isSame(dataSelecionada, 'day');
+
+		if (currentDate) {
+			const currentHour = now.format('HH:mm');
+			horariosDisponiveis.forEach((item) => {
+				item.forEach((time) => {
+					if (time < currentHour) {
+						wrongHours.push(time);
+					}
+				});
+			});
+		}
+
 		horariosDisponiveis.map((item) => {
 			return item.map((time) => {
 				if (time > '19:20' || (time >= '12:00' && time < '13:00')) {
