@@ -7,7 +7,7 @@ import {
 } from './actions';
 import types from './types';
 
-const salaoId = process.env.SALAO_ID;
+const salaoId = process.env.REACT_APP_SALAO_ID;
 
 export function* fetchColaboradores() {
   const { form } = yield select(state => state.colaboradorReducer);

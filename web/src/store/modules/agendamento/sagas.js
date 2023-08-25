@@ -9,7 +9,7 @@ export function* filterAgendamento(action) {
     const { start, end } = action;
 
     const {data: res} = yield call(api.post, '/agendamento/filter', {
-        salaoId: process.env.SALAO_ID,
+      salaoId: process.env.REACT_APP_SALAO_ID,
         periodo: {
           inicio: start,
           fim: end
