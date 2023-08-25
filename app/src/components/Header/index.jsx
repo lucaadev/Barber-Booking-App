@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Cover, GradientView, Container, TextInput } from '../../styles';
 import theme from '../../styles/theme';
 import Servicos from '../Servicos';
+import InfosSalao from '../InfosSalao';
 import { updateForm } from '../../store/modules/salao/actions';
 
 export default function Header() {
@@ -128,6 +129,7 @@ export default function Header() {
 					<Servicos servicos={finalServicos} />
 				</Container>
 			</Container>
+			<InfosSalao />
 		</>
 	);
 }
