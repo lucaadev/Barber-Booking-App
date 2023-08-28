@@ -53,6 +53,14 @@ function Header() {
 					<span>Servicos</span>
 				</Link>
 				<Link
+					to='/adicionais'
+					className={location.pathname === '/adicionais' ? 'active' : ''}
+					onClick={showNavbar}
+				>
+					<span className='mdi mdi-plus m-1'></span>
+					<span>Adicionais</span>
+				</Link>
+				<Link
 					to='/horarios'
 					className={location.pathname === '/horarios' ? 'active' : ''}
 					onClick={showNavbar}
