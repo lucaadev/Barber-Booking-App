@@ -1,8 +1,12 @@
 const Adicional = require('../database/models/adicional');
+const moment = require('moment');
 
 const newAdicional = async (data) => {
-  data.duracao = new Date(data.duracao * 60 * 1000);
+  const duracao = moment().startOf('day').add(data.duracao, 'minutes');
+
+  data.duracao = duracao.toDate();
   const adicional = await Adicional(data).save();
+
   return adicional;
 }
 
@@ -16,11 +20,12 @@ const getAdicionalBySalaoId = async (id) => {
 }
 
 const getAllAdicionais = async () => {
-  const adicionais = await Adicional.find();
-  return adicionais;
+  const allAdicionais = await Adicional.find();
+  return { adicionais: allAdicionais }
 }
 
 const updateAdicional = async (id, data) => {
+  data.duracao = new Date(data.duracao * 60 * 1000);
   const adicional = await Adicional.findByIdAndUpdate(id, data)
   return adicional;
 }

@@ -93,7 +93,6 @@ export function* removeServico() {
 }
 
 export function* removeArquivo({ payload }) {
-  console.log(payload);
   const { form } = yield select(state => state.servicoReducer);
   try {
     yield put(updateServico({ form: { ...form, filtering: true } }));
