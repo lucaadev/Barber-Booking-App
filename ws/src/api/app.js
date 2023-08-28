@@ -8,6 +8,7 @@ const horarioRoute = require('../routes/horario');
 const clienteRoute = require('../routes/cliente');
 const colaboradorRoute = require('../routes/colaborador');
 const agendamentoRoute = require('../routes/agendamento');
+const adicionalRoute = require('../routes/adicional');
 const errorMiddleware = require('../middlewares/errorMiddleware');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/horario', horarioRoute);
 app.use('/cliente', clienteRoute);
 app.use('/colaborador', colaboradorRoute);
 app.use('/agendamento', agendamentoRoute);
+app.use('/adicional', adicionalRoute);
 app.use(errorMiddleware);
 
 module.exports = app;
