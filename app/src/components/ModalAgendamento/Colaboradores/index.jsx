@@ -17,6 +17,7 @@ export default function ColaboradorPicker({
 	agendamento,
 	colaboradoresDia,
 	horaSelecionada,
+	horariosVazios,
 }) {
 	const dispatch = useDispatch();
 
@@ -29,22 +30,22 @@ export default function ColaboradorPicker({
 		}
 	}
 
-const colaboradoresDisponiveisIdUnicos = _.uniq(colaboradoresDisponiveisId);
+	const colaboradoresDisponiveisIdUnicos = _.uniq(colaboradoresDisponiveisId);
 
-const colaboradoresDisponiveisUnicos = colaboradores.filter((colaborador) =>
-	colaboradoresDisponiveisIdUnicos.includes(colaborador._id)
-);
+	const colaboradoresDisponiveisUnicos = colaboradores.filter((colaborador) =>
+		colaboradoresDisponiveisIdUnicos.includes(colaborador._id)
+	);
 
-const uniqueItems = [];
-const colaboradoresDisponiveis = colaboradoresDisponiveisUnicos.filter(
-	(item) => {
-		if (!uniqueItems.includes(item._id)) {
-			uniqueItems.push(item._id);
-			return true;
+	const uniqueItems = [];
+	const colaboradoresDisponiveis = colaboradoresDisponiveisUnicos.filter(
+		(item) => {
+			if (!uniqueItems.includes(item._id)) {
+				uniqueItems.push(item._id);
+				return true;
+			}
+			return false;
 		}
-		return false;
-	}
-);
+	);
 
 	return (
 		<>
@@ -59,6 +60,7 @@ const colaboradoresDisponiveis = colaboradoresDisponiveisUnicos.filter(
 			>
 				Com quem você deseja agendar?
 			</Text>
+			{!horariosVazios && (
 			<FlatList
 				data={colaboradoresDisponiveis}
 				horizontal
@@ -138,6 +140,7 @@ const colaboradoresDisponiveis = colaboradoresDisponiveisUnicos.filter(
 				}}
 				keyExtractor={(item) => item?._id}
 			/>
+			)}
 		</>
 	);
 }

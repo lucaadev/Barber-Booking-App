@@ -4,6 +4,7 @@ import {
 	View,
 	Text,
 	Image,
+	ImageBackground,
 	TouchableOpacity,
 	Linking,
 } from 'react-native';
@@ -59,16 +60,22 @@ export default function Header() {
 					alignSelf: 'center',
 				}}
 			/>
-			<View>
-				<Cover
+			<View
+				style={{
+					alignSelf: 'center',
+				}}
+			>
+				<ImageBackground
 					source={{ uri: salao?.images?.[0] }}
-					width={110}
-					height={300}
-					opacity={0.5}
-					zIndex={0}
+					style={{
+						width: 600,
+						height: 300,
+						opacity: 0.5,
+						zIndex: 0,
+					}}
 				>
 					<GradientView colors={['#fff', '#fff']}></GradientView>
-				</Cover>
+				</ImageBackground>
 				<Text style={styles.textBarbearia}>BARBEARIA LISBOA</Text>
 				<Text style={styles.textAgendeSeuHorario}>
 					AGENDE SEU HORÁRIO ONLINE
@@ -77,10 +84,6 @@ export default function Header() {
 					Já é membro do Lisboa Club?{'\n'}
 					Agende aqui
 				</Text>
-				<TouchableOpacity style={styles.buttonAgendamento}>
-					<Text style={styles.textAgendamento}>AGENDE JÁ </Text>
-					<Icon name='calendar-blank' size={25} color='#fff' />
-				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.buttonLisboa}
 					onPress={() => navigation.navigate('LisboaClub')}
@@ -149,12 +152,6 @@ const styles = StyleSheet.create({
 		marginTop: 220,
 		marginStart: 30,
 	},
-	textAgendamento: {
-		color: '#fff',
-		textAlign: 'center',
-		fontWeight: 'bold',
-		fontSize: 20,
-	},
 	buttonLisboa: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -163,11 +160,11 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		width: 200,
 		alignItems: 'center',
+		alignSelf: 'center',
 		justifyContent: 'center',
 		zIndex: 999,
 		position: 'absolute',
 		marginTop: 220,
-		marginStart: 290,
 	},
 	textLisboa: {
 		color: theme.colors.yellow,
@@ -197,10 +194,10 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		color: theme.colors.purple,
 		textAlign: 'center',
+		alignSelf: 'center',
 		fontWeight: '600',
 		fontSize: 18,
 		marginTop: 170,
-		marginStart: 280,
 	},
 	textServicos: {
 		color: theme.colors.primary,

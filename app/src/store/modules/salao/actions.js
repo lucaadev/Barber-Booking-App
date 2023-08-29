@@ -72,3 +72,10 @@ export function updateClub(club) {
     payload: club,
   };
 }
+
+export function updateHorariosVazios(horariosVazios) {
+  return {
+    type: types.UPDATE_HORARIOS_VAZIOS,
+    payload: horariosVazios,
+  };
+}

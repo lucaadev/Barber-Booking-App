@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment/min/moment-with-locales';
 import { Container } from '../../styles';
 import theme from '../../styles/theme';
-import { updateAgendamento } from '../../store/modules/salao/actions';
+import { updateAgendamento, updateHorariosVazios } from '../../store/modules/salao/actions';
 import selectAgendamento from '../../utils/selectAgendamento';
 
 moment.locale('pt-br');
@@ -137,9 +137,21 @@ const DateAndTime = memo(
 			});
 		});
 
-		const filteredHours = horariosDisponiveis.map((item) => {
+		let filteredHours = horariosDisponiveis.map((item) => {
 			return item.filter((time) => !wrongHours.includes(time));
 		});
+
+		filteredHours.forEach((item) => {
+			if (item.length === 0) {
+				filteredHours = filteredHours.filter((item) => item.length !== 0);
+			}
+		});
+
+		if(filteredHours.length === 0) {
+			dispatch(updateHorariosVazios(true))
+		} else {
+			dispatch(updateHorariosVazios(false))
+		}
 
 		const uniqueKeysSet = new Set();
 		const uniqueDates = [];

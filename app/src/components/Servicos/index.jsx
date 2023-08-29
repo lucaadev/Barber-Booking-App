@@ -23,7 +23,7 @@ export default function Servicos(props) {
 	const isLisboaClubPage = props.currentPage === 'LisboaClub';
 
 	const breakTitleIntoTwoLines = (title) => {
-		const maxLength = 15;
+		const maxLength = 14;
 		if (title.length > maxLength) {
 			return `${title.substring(0, maxLength)}\n${title.substring(maxLength)}`;
 		}
@@ -77,7 +77,11 @@ export default function Servicos(props) {
 						)}
 						right={() => (
 							<TouchableOpacity
-								style={styles.buttonAgendamento}
+								style={
+									isLisboaClubPage
+										? styles.buttonAgendamentoLisboa
+										: styles.buttonAgendamento
+								}
 								onPress={() => {
 									dispatch(updateAgendamento({ servicoId: servico._id }));
 									dispatch(filterAgenda());
@@ -86,8 +90,20 @@ export default function Servicos(props) {
 										: null;
 								}}
 							>
-								<Text style={styles.buttonText}>Agendar</Text>
-								<Icon name='calendar-blank' size={25} color='#fff' />
+								<Text
+									style={
+										isLisboaClubPage
+											? styles.buttonTextLisboa
+											: styles.buttonText
+									}
+								>
+									Agendar
+								</Text>
+								<Icon
+									name='calendar-blank'
+									size={25}
+									color={isLisboaClubPage ? '#FDB02F' : '#fff'}
+								/>
 							</TouchableOpacity>
 						)}
 					/>
@@ -140,8 +156,26 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
 	},
+	buttonAgendamentoLisboa: {
+		display: 'flex',
+		flexDirection: 'row',
+		marginTop: '4%',
+		backgroundColor: '#4D4269',
+		padding: 10,
+		borderRadius: 50,
+		width: 200,
+		height: 60,
+		alignItems: 'center',
+		justifyContent: 'space-evenly',
+	},
 	buttonText: {
 		color: '#fff',
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: 20,
+	},
+	buttonTextLisboa: {
+		color: '#FDB02F',
 		textAlign: 'center',
 		fontWeight: 'bold',
 		fontSize: 20,

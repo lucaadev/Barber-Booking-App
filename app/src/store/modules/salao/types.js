@@ -11,6 +11,7 @@ const types = {
   UPDATE_FORM: '@agendamento/updateForm',
   UPDATE_COLABORADORES: '@agendamento/updateColaboradores',
   SAVE_AGENDAMENTO: '@agendamento/saveAgendamento',
+  UPDATE_HORARIOS_VAZIOS: '@agendamento/updateHorariosVazios',
 }
 
 export default types;

@@ -22,6 +22,7 @@ export const Cover = styled.ImageBackground.attrs((props) => ({
   border-color: ${(props) => props.borderColor || 'transparent'};
   background-color: ${theme.colors.muted};
   opacity: ${(props) => props.opacity || '1'};
+  align-self: ${(props) => props.align || 'center'};
 `;
 
 export const GradientView = styled(LinearGradient).attrs((props) => ({
