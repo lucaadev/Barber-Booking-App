@@ -23,16 +23,19 @@ const Agendamentos = () => {
 		(state) => state.agendamentoReducer
 	);
 
-	const formatedEvents = agendamentos.map((agendamento) => ({
+const formatedEvents = agendamentos.map((agendamento) => {
+	const duracaoMoment = moment(agendamento.servicoId.duracao);
+	const duracaoEmMinutos = duracaoMoment.hours() * 60 + duracaoMoment.minutes();
+
+	return {
 		title: `${agendamento.servicoId.nome} - ${agendamento.clienteId.nome} - ${agendamento.colaboradorId.nome}`,
-		start: moment(agendamento.data).toDate(),
+		start: moment(agendamento.data).add(3, 'hours').toDate(),
 		end: moment(agendamento.data)
-			.add(
-				parseInt(moment.duration(agendamento.servicoId.duracao).asMinutes()),
-				'minutes'
-			)
+			.add(3, 'hours')
+			.add(duracaoEmMinutos, 'minutes')
 			.toDate(),
-	}));
+	};
+});
 
 	const formatRange = (range) => {
 		let finalRange = {};
