@@ -4,7 +4,7 @@ const moment = require('moment');
 const newAdicional = async (data) => {
   const duracao = moment().startOf('day').add(data.duracao, 'minutes');
 
-  data.duracao = duracao.toDate();
+  data.duracao = duracao;
   const adicional = await Adicional(data).save();
 
   return adicional;
