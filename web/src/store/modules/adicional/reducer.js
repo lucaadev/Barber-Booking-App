@@ -24,11 +24,10 @@ const initialState = {
 
 export const adicionalReducer = createReducer(initialState, (builder) => {
   builder.addCase(types.UPDATE_ADICIONAL, (state, action) => {
-    console.log(action.payload);
-    // return {
-    //   ...state,
-    //   ...action.payload,
-    // };
+    return {
+      ...state,
+      ...action.payload,
+    };
   }).addCase(types.RESET_ADICIONAL, (state) => {
     return {
       ...state,

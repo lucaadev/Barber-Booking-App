@@ -12,17 +12,15 @@ const salaoId = process.env.REACT_APP_SALAO_ID;
 export function* fetchAdicionais() {
   const { form } = yield select(state => state.adicionalReducer);
   try {
-    console.log('1');
     yield put(updateAdicional({ form: { ...form, filtering: true } }));
     const { data: res } = yield call(api.get, `/adicional/${salaoId}`);
-    console.log('2');
     yield put(updateAdicional({ form: { ...form, filtering: false } }));
 
 
     if (res.error) {
       alert(res.error);
     } else {
-      yield put(updateAdicional({ adicionais: res }));
+      yield put(updateAdicional({ adicionais: res.adicionais }));
     }
   } catch (err) {
     yield put(updateAdicional({ form: { ...form, filtering: false } }));
@@ -89,6 +87,5 @@ export function* deleteAdicional() {
 export default all([
   takeLatest(types.FETCH_ADICIONAIS, fetchAdicionais),
   takeLatest(types.CREATE_ADICIONAL, addAdicional),
-  takeLatest(types.UPDATE_ADICIONAL, addAdicional),
   takeLatest(types.DELETE_ADICIONAL, deleteAdicional),
 ]);

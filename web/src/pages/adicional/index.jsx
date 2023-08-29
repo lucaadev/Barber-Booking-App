@@ -27,7 +27,7 @@ const Adicionais = () => {
 		(state) => state.adicionalReducer
 	);
 
-	const setComponent = (component, state) => {
+  const setComponent = (component, state) => {
 		dispatch(
 			updateAdicional({ components: { ...components, [component]: state } })
 		);
@@ -207,7 +207,8 @@ const Adicionais = () => {
 							},
 							{
 								label: 'Duração',
-								content: (adicional) => moment(adicional.duracao).format('HH:mm'),
+								content: (adicional) =>
+									moment(adicional.duracao).format('HH:mm'),
 								width: 150,
 								fixed: true,
 							},
