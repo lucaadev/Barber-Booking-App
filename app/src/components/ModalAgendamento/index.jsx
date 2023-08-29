@@ -24,7 +24,7 @@ import moment from 'moment';
 export default function ModalAgendamento() {
 	const dispatch = useDispatch();
 
-	const { form, agendamento, servicosSalao, agenda, colaboradores, salao } =
+	const { form, agendamento, servicosSalao, agenda, colaboradores, salao, horariosVazios } =
 		useSelector((state) => state.salaoReducer);
 
 	const { servicos } = servicosSalao;
@@ -107,10 +107,11 @@ export default function ModalAgendamento() {
 									servico={servico}
 									horaSelecionada={horaSelecionada}
 									colaboradoresDia={colaboradoresDia}
+									horariosVazios={horariosVazios}
 								/>
 								<Button
 									loading={form.agendamentoLoading}
-									disabled={form.agendamentoLoading}
+									disabled={form.agendamentoLoading || horariosVazios}
 									mode='contained'
 									uppercase={false}
 									style={{

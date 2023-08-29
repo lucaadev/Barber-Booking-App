@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   servicosSalao: [],
   agenda: [],
   colaboradores: [],
+  horariosVazios: false,
   club: false,
   agendamento: {
     loading: false,
@@ -52,6 +53,9 @@ export const salaoReducer = createReducer(INITIAL_STATE, (builder) => {
   });
   builder.addCase(types.UPDATE_CLUB, (state, action) => {
     state.club = action.payload;
+  });
+  builder.addCase(types.UPDATE_HORARIOS_VAZIOS, (state, action) => {
+    state.horariosVazios = action.payload;
   });
   builder.addDefaultCase((state, _action) => {
     return state;
