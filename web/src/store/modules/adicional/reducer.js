@@ -28,10 +28,10 @@ export const adicionalReducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     };
-  }).addCase(types.RESET_ADICIONAL, (state) => {
+  }).addCase(types.RESET_ADICIONAL, (state, action) => {
     return {
       ...state,
-      ...initialState.adicional,
+      ...action.payload,
     };
   }).addDefaultCase((state) => state);
 });

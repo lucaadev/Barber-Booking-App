@@ -1,4 +1,5 @@
 import types from "./types"
+import moment from 'moment'
 
 export function fetchServicos() {
   return {
@@ -15,7 +16,20 @@ export function addServico() {
 }
 
 export function resetServico() {
-  return { type: types.RESET_SERVICO }
+  return {
+    type: types.RESET_SERVICO,
+    payload: {
+      servico: {
+        nome: '',
+        valor: '',
+        duracao: moment('00:20', 'HH:mm').format(),
+        recorrencia: '',
+        descricao: '',
+        status: 'A',
+        arquivos: [],
+      }
+    }
+  }
 }
 
 export function removeArquivo(payload) {
