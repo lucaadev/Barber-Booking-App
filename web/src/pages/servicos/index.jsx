@@ -164,6 +164,7 @@ const Servicos = () => {
 					{behavior === 'update' && (
 						<Button
 							loading={form.saving}
+							appearance='ghost'
 							color='red'
 							size='lg'
 							block

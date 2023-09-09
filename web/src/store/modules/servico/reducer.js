@@ -31,10 +31,10 @@ export const servicoReducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     };
-  }).addCase(types.RESET_SERVICO, (state) => {
+  }).addCase(types.RESET_SERVICO, (state, action) => {
     return {
       ...state,
-      ...initialState.servico,
+      ...action.payload,
     };
   }).addDefaultCase((state) => state);
 });

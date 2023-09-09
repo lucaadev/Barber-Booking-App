@@ -38,6 +38,14 @@ const Adicionais = () => {
 	};
 
 	const save = () => {
+		const moreThreeHours = moment(adicional.duracao);
+
+		const newDuracao = moment(moreThreeHours).minutes();
+
+		console.log(newDuracao);
+
+		setAdicional('duracao', newDuracao);
+
 		dispatch(createAdicional());
 	};
 
@@ -122,6 +130,7 @@ const Adicionais = () => {
 					{behavior === 'update' && (
 						<Button
 							loading={form.saving}
+							appearance='ghost'
 							color='red'
 							size='lg'
 							block
@@ -208,7 +217,7 @@ const Adicionais = () => {
 							{
 								label: 'Duração',
 								content: (adicional) =>
-									moment(adicional.duracao).format('HH:mm'),
+									moment(adicional.duracao).add(3, 'hours').format('HH:mm'),
 								width: 150,
 								fixed: true,
 							},

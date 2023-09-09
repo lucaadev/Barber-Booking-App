@@ -1,4 +1,5 @@
 import types from "./types";
+import moment from 'moment';
 
 export function fetchAdicionais() {
   return {
@@ -36,6 +37,14 @@ export function updateModal(modal) {
 
 export function resetAdicional() {
   return {
-    type: types.RESET_ADICIONAL
+    type: types.RESET_ADICIONAL,
+    payload: {
+      adicional: {
+        nome: '',
+        valor: '',
+        duracao: moment('00:20', 'HH:mm').format(),
+        status: 'A',
+      }
+    }
   };
 }
