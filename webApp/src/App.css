@@ -64,11 +64,21 @@ i {
   box-sizing: border-box;
 }
 
-img {
+.logo-login {
   width: 35px;
   position: absolute;
   top: 30px;
   left: 30px;
+}
+
+.register-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 37%;
+  margin-bottom: 20px;
+  width: 70px;
+  position: relative;
 }
 
 .input-box header {
@@ -142,6 +152,13 @@ img {
   text-align: center;
   font-size: small;
   margin-top: 25px;
+}
+
+.go-back{
+  text-align:start;
+  font-size: small;
+  margin-top: 25px;
+  height: 0px;
 }
 
 span a {
