@@ -26,10 +26,14 @@ export default function Index() {
 					const nome = servico.nome.toLowerCase();
 					const filtro = form.inputFiltro.toLowerCase().trim().split(' ');
 					return filtro.every((palavra) => nome.includes(palavra));
-			  })
+			})
 			: servicos;
 
 	const barberShopTitle = salao?.nome?.toUpperCase();
+
+	const openInNewTab = (url) => {
+		window.open(url, '_blank', 'noreferrer');
+	};
 
 	useEffect(() => {
 		dispatch(getSalao());
@@ -69,7 +73,7 @@ export default function Index() {
 							<div className='lisboa-text'>
 								<p className='lisboa-text-p'>Já é membro do Lisboa Club?</p>
 								<button
-									className='button-agende-ja'
+									className='button-lisboa-club'
 									onClick={() => navigation('/Login')}
 								>
 									Lisboa Club
@@ -77,8 +81,21 @@ export default function Index() {
 							</div>
 						</div>
 					</div>
-					<div className="propaganda">
-						
+					<div className='propaganda-div'>
+						<button
+							className='propaganda-button'
+							onClick={() =>
+								openInNewTab(
+									'https://wa.me/5503182667330?text=Olá, gostaria de fazer parte do Lisboa Club!'
+								)
+							}
+						>
+							<img
+								src={salao?.images?.[1]}
+								alt='propaganda'
+								className='propaganda'
+							/>
+						</button>
 					</div>
 				</div>
 			</div>
