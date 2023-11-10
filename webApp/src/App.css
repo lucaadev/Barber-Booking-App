@@ -64,11 +64,21 @@ i {
   box-sizing: border-box;
 }
 
-img {
+.logo-login {
   width: 35px;
   position: absolute;
   top: 30px;
   left: 30px;
+}
+
+.register-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 37%;
+  margin-bottom: 20px;
+  width: 70px;
+  position: relative;
 }
 
 .input-box header {
@@ -144,6 +154,13 @@ img {
   margin-top: 25px;
 }
 
+.go-back {
+  text-align: start;
+  font-size: small;
+  margin-top: 25px;
+  height: 0px;
+}
+
 span a {
   text-decoration: none;
   font-weight: 700;
@@ -154,6 +171,145 @@ span a {
 span a:hover {
   text-decoration: underline;
   color: #000;
+}
+
+/* Tela Home */
+
+/* HEADER */
+.wrapper-header {
+  background: #ececec;
+}
+
+.col-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gradiente {
+  width: 1116px;
+  height: 300px;
+  background-image: linear-gradient(to bottom, rgba(255, 204, 0, 0), #5451d1b3);
+}
+
+.capa-header {
+  width: 1116px;
+  height: 300px;
+  background-image: url('https://www.viverembraga.com/images/blog/embeleza_(8).jpg');
+  opacity: 0.5;
+}
+
+.capa-header-2 {
+  width: 1116px;
+  height: 300px;
+  object-fit: cover;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.logo-header {
+  width: 150px;
+  border-radius: 50%;
+  position: absolute;
+  top: 230px;
+  z-index: 1;
+}
+
+.lb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.title-header {
+  text-align: center;
+  flex-direction: column;
+  position: absolute;
+  top: 390px;
+  z-index: 1;
+}
+
+.barber-shop-title {
+  color: #353D87;
+}
+
+.schecule-text {
+  color: #FDB02F;
+}
+
+.button-and-lisboa-text {
+  position: absolute;
+  top: 510px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  z-index: 1;
+}
+
+.button-agende-ja {
+  background-color: #353D87;
+  border-radius: 50px;
+  border: none;
+  padding: 5px 15px 5px 15px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.button-lisboa-club{
+  background-color: #4D4269;
+  border-radius: 50px;
+  border: 2px solid #FDB02F;
+  padding: 10px 20px 10px 20px;
+  color: #FDB02F;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.lisboaclub-title {
+  color: #353D87;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.lisboa-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #4D4269;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* PROPAGANDA */
+
+.propaganda-div{
+  display: flex;
+  justify-content: center;
+  width: 1116px;
+  height: 300px;
+}
+
+.propaganda{
+  width: 1116px;
+  height: 300px;
+}
+
+.propaganda-button{
+  border: none;
 }
 
 @media only screen and (max-width: 768px) {

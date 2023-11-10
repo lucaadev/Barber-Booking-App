@@ -42,8 +42,6 @@ const Adicionais = () => {
 
 		const newDuracao = moment(moreThreeHours).minutes();
 
-		console.log(newDuracao);
-
 		setAdicional('duracao', newDuracao);
 
 		dispatch(createAdicional());

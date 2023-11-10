@@ -109,7 +109,7 @@ tente novamente mais tarde.`,
 			<div className='container main'>
 				<div className='row'>
 					<div className='col-md-6 side-image'>
-						<img src={logo} alt='' />
+						<img className='logo-login' src={logo} alt='' />
 						<div className='text'></div>
 					</div>
 					<div className='col-md-6 right'>
