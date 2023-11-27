@@ -57,7 +57,7 @@ export const salaoReducer = createReducer(INITIAL_STATE, (builder) => {
   builder.addCase(types.UPDATE_HORARIOS_VAZIOS, (state, action) => {
     state.horariosVazios = action.payload;
   });
-  builder.addDefaultCase((state, _action) => {
+  builder.addDefaultCase((state) => {
     return state;
   });
 });

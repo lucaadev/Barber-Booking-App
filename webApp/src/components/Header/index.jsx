@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import {
 	allServicos,
 	updateAgendamento,
 } from '../../store/modules/salao/actions';
+import Servicos from '../../components/serviços/index';
 
 export default function Index() {
 	const navigation = useNavigate();
@@ -96,6 +98,9 @@ export default function Index() {
 								className='propaganda'
 							/>
 						</button>
+					</div>
+					<div className='servicos-div'>
+						<Servicos servicos={finalServicos} />
 					</div>
 				</div>
 			</div>

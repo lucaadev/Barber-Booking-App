@@ -8,8 +8,6 @@ import { updateCliente } from '../../store/modules/cliente/actions';
 import { getSalao } from '../../store/modules/salao/actions';
 import api from '../../services/api';
 
-import logo from '../../assets/icon.png';
-
 export default function Index() {
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -106,15 +104,14 @@ tente novamente mais tarde.`,
 
 	return (
 		<div className='wrapper'>
-			<div className='container main'>
+			<div className='main'>
 				<div className='row'>
 					<div className='col-md-6 side-image'>
-						<img className='logo-login' src={logo} alt='' />
 						<div className='text'></div>
 					</div>
 					<div className='col-md-6 right'>
 						<div className='input-box'>
-							<h1 className='text-center p-3'>Barbearia Lisboa</h1>
+							<h1 className='text-center p-3'>Nome da Barbearia</h1>
 							<header>Bem Vindo(a)!</header>
 							<div className='input-field'>
 								<InputMask
@@ -128,7 +125,7 @@ tente novamente mais tarde.`,
 							</div>
 							<div className='input-field'>
 								<button
-									className='submit'
+									className='submit btn btn-primary'
 									onClick={submitLogin}
 									disabled={isLoading}
 								>
